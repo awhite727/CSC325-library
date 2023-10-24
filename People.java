@@ -1,12 +1,12 @@
 public class People {
 
-    private String libraryNumber;
+    private int libraryNumber;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private double feesDue;
     //constructor
-    public People(String libraryNumber, String firstName, String lastName, String phoneNumber) {
+    public People(int libraryNumber, String firstName, String lastName, String phoneNumber) {
         this.libraryNumber = libraryNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -14,7 +14,7 @@ public class People {
         feesDue = 0     //all new members start with a fee of 0
     }
     //getters for the attributes
-    public String getLibraryNumber() {
+    public int getLibraryNumber() {
         return libraryNumber;
     }
     public String getFirstName() {
@@ -30,7 +30,7 @@ public class People {
         return feesDue;
     }
     //setters for the attributes
-    public void setLibraryNumber(String libraryNumber) {
+    public void setLibraryNumber(int libraryNumber) {
         this.libraryNumber = libraryNumber;
     }
     public void setFirstName(String firstName) {
@@ -45,5 +45,5 @@ public class People {
     public void setFeesDue(double feesDue) {
         this.feesDue = feesDue;
     }
-    
+
 } 
