@@ -38,7 +38,7 @@ public class Graphics extends JFrame {
         JPanel screen5 = createScreen5();   //removing book
         cardPanel.add(screen5, "Screen5");
 
-    // Screen __ - __ are associated with Member Management
+    // Screens 6 - 10 are associated with Member Management
         JPanel screen6 = createPanel_6("Screen 6", "Add Member", "Update Member Info", "View Members", "Inital Screen");
         cardPanel.add(screen6, "Screen6");
 
@@ -55,7 +55,21 @@ public class Graphics extends JFrame {
         //cardPanel.add(screen10, "Screen10");
 
 
+    // Screen 11 displays the book info
+        //JPanel screen11 = createScreen11();  // view members
+        //cardPanel.add(screen11, "Screen11");
 
+
+    // Screens 12 - 14 are associated with Borrowing and Returning books
+        JPanel screen12 = createScreen12(); //adding member
+        cardPanel.add(screen12, "Screen12");
+
+        JPanel screen13 = createScreen13(); //returning book confirmation
+        cardPanel.add(screen13, "Screen13");
+
+        JPanel screen14 = createScreen14();  //book checked out confirmation
+        cardPanel.add(screen14, "Screen14");
+    
         // Add the card panel to the JFrame
         add(cardPanel);
 
@@ -76,6 +90,9 @@ public class Graphics extends JFrame {
                     }
                     if (buttonText.equals("Member Management")){       
                         cardLayout.show(cardPanel, "Screen6"); 
+                    }
+                    if (buttonText.equals("Borrow/Return")){       
+                        cardLayout.show(cardPanel, "Screen12"); 
                     }
                 }
             });
@@ -125,7 +142,7 @@ public class Graphics extends JFrame {
         L3 = new JLabel("ISBN: ",JLabel.RIGHT);
         L4 = new JLabel("Quantity: ",JLabel.RIGHT);
         // Add a text box (JTextField)
-        JTextField textField1= new JTextField(10);
+        JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
         JTextField textField3 = new JTextField(10);
         JTextField textField4 = new JTextField(10);
@@ -447,6 +464,114 @@ public class Graphics extends JFrame {
         setVisible(true);
         return panel;
     }
+
+
+
+
+
+
+    private JPanel createScreen12() {
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6,2,3,1));
+
+        JLabel L00,L0,L1,L2;
+        L00 = new JLabel("  ");
+        L0 = new JLabel("Please enter the Member ID and ISBN of the book being borrowed or returned.",JLabel.CENTER);
+        L1 = new JLabel("Member ID: ",JLabel.RIGHT);
+        L2 = new JLabel("ISBN: ",JLabel.RIGHT);
+
+        // Add a text box (JTextField)
+        JTextField textField1= new JTextField(10);
+        JTextField textField2 = new JTextField(10);
+
+        L1.setLabelFor(textField1);
+        L2.setLabelFor(textField2);
+
+        JButton backButton = new JButton("Back to Initial");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+
+        JButton confirmButton = new JButton("Confirm (Returning)");
+        confirmButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "Screen13");
+            }
+        });
+    // confirmButton2 allows us to see the book borrowing screen until we implement 
+    // the conditional that checks if the book is currently checked out by member.
+        JButton confirmButton2 = new JButton("Confirm (Borrowed)");
+        confirmButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "Screen14");
+            }
+        });
+
+        panel.add(L00);
+        panel.add(L0);
+        panel.add(L1);
+        panel.add(textField1);
+        panel.add(L2);
+        panel.add(textField2);
+        panel.add(backButton);
+        panel.add(confirmButton);
+        panel.add(confirmButton2);
+        setVisible(true);
+        return panel;
+    }
+
+    private JPanel createScreen13() {
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4,1,3,1));
+
+        JLabel L0,L1;
+        L0 = new JLabel("Book Returned!",JLabel.CENTER);
+        L1 = new JLabel("Late Fees due = $",JLabel.CENTER);
+
+
+
+        JButton backButton = new JButton("Back to Initial");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+
+        panel.add(L0);
+        panel.add(L1);
+        panel.add(backButton);
+        setVisible(true);
+        return panel;
+    }
+
+    private JPanel createScreen14() {
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4,1,3,1));
+
+        JLabel L0,L1;
+        L0 = new JLabel("Book Has Been Checked Out!",JLabel.CENTER);
+        L1 = new JLabel("Return date: ",JLabel.CENTER);
+
+        JButton backButton = new JButton("Back to Initial");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+
+        panel.add(L0);
+        panel.add(L1);
+        panel.add(backButton);
+        setVisible(true);
+        return panel;
+    }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
