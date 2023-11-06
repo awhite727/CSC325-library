@@ -10,11 +10,11 @@ public class PersonAccess {//implements AccessInterface {
 
 
 
-    public People searchByID(String ID) {//NOTE: Not efficient 
-        String checkID;
+    public People searchByID(int ID) {//NOTE: Not efficient 
+        int checkID;
         for (int i=0; i<people.size();i++){
-            checkID = String.valueOf(people.get(i).getLibraryNumber());
-            if (ID.equalsIgnoreCase(checkID)){
+            checkID = people.get(i).getLibraryNumber();
+            if (ID == checkID){
                 return people.get(i);
             }
         }

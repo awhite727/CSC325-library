@@ -11,7 +11,7 @@ public class People {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        feesDue = 0     //all new members start with a fee of 0
+        feesDue = 0;     //all new members start with a fee of 0
     }
     //getters for the attributes
     public int getLibraryNumber() {

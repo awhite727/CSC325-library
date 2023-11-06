@@ -16,10 +16,12 @@ public class TransactionAccess {//implements AccessInterface {
     public void removeItem(Transaction transaction) {//calculates fees due and updates People fees accrued, then removes the item
         try {
             int currDay = (int) (System.currentTimeMillis()/1000/60/60/24); //converts to days and stores
-            int timePassed = Integer.parseInt(transaction.getDueDate()) - currDay; //ex.) due 10.30 turned in 10.31
-            if (timePassed < 0) {//TO DO: Complete
-                //find person 
-                //increase their fees due 
+            int daysPastDue = currDay - Integer.parseInt(transaction.getDueDate()); //ex.) turned in 10.31 due 10.30
+            if (daysPastDue > 0) {//TO DO: Complete //NOTE: Should be another class for SOLID principles? 
+                PersonAccess findPerson = new PersonAccess();
+                People person = findPerson.searchByID(transaction.getLibraryNumber());
+                //NOTE: Change to proper fees per day 
+                person.setFeesDue(person.getFeesDue()+(0.15*daysPastDue));
             }
         }
         catch (IllegalArgumentException e){
