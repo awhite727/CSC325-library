@@ -504,7 +504,7 @@ public class Graphics extends JFrame {
         f.setTitle("Book Data");
  
         // Data to be displayed in the JTable
-        String[][] data = BookAccess.getBooks();
+        ArrayList data = BookAccess.getBooks();
  
         // Column Names
         String[] columnNames = {};
