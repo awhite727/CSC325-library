@@ -5,6 +5,10 @@ public class BookAccess {
     //searches corresponding column, and creates a BookDetails object of all the info
     private ArrayList<Book> books = new ArrayList<Book>();
 
+    public ArrayList<Book> getBooks(){
+        return books;
+    }
+
     public Book searchByISBN(String ISBN) {
         String checkISBN = "";
         for (int i=0; i<books.size();i++){
