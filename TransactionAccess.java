@@ -5,11 +5,11 @@ public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
     //searchBy unneeded?
-    public void addItem(Transaction transaction) {
+    public void addItem(Transaction transaction) {//adds a Transaction object to the ArrayList of Transactions 
         transactions.add(transaction);
     }
 
-    public void editItem() {}
+    public void editItem() {} //MD 11.9.23 NOTE: Do we need this for transactions?
 
     public void removeItem(Transaction transaction) {//calculates fees due and updates People fees accrued, then removes the item
             long currDay = (System.currentTimeMillis()/1000/60/60/24); //converts to days and stores

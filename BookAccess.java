@@ -1,8 +1,8 @@
 //MD: 11.9.23
 import java.util.ArrayList;
 public class BookAccess {
-    //searchBy methods: gets a search element (i.e. isbn) as a parameter, 
-    //searches corresponding column, and creates a BookDetails object of all the info
+    //searchBy methods: gets a search element (i.e. isbn) as a parameter, and returns the corresponding object
+    //Or ArrayList of objects; Returns null if not found
     private ArrayList<Book> books = new ArrayList<Book>();
 
     public ArrayList<Book> getBooks(){
@@ -17,7 +17,7 @@ public class BookAccess {
                 return books.get(i);
             }
         }
-        return null; //couldn't find the object
+        return null;
     }
 
     public ArrayList<Book> searchByAuthor(String author) {
@@ -30,7 +30,7 @@ public class BookAccess {
             }
         }
         if (allByAuthor.isEmpty()){
-            return null;//couldn't find the object
+            return null;
         }
         return allByAuthor;
     }
@@ -45,7 +45,7 @@ public class BookAccess {
             }
         }
         if (allOfTitle.isEmpty()){
-            return null;//couldn't find the object
+            return null;
         }
         return allOfTitle;
     }
@@ -60,7 +60,7 @@ public class BookAccess {
             }
         }
         if (allOfGenre.isEmpty()){
-            return null;//couldn't find the object
+            return null;
         }
         return allOfGenre;
     }
@@ -70,9 +70,9 @@ public class BookAccess {
     }
 
     public void editItem(Book original) {}//Empty because the book should automatically update as it is now, 
-    //but will be needed with the database
+    //but it will be needed with the database
 
-    public void removeItem(Book book) {
+    public void removeItem(Book book) {//removes a Book object from the ArrayList of Books
         books.remove(book);
     }
 }
