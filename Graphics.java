@@ -4,6 +4,7 @@ import javax.swing.JTable;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Graphics extends JFrame {
     private JPanel cardPanel;
