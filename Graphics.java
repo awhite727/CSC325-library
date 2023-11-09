@@ -39,7 +39,7 @@ public class Graphics extends JFrame {
         cardPanel.add(screen5, "Screen5");
 
     // Screens 6 - 10 are associated with Member Management
-        JPanel screen6 = createPanel_6("Screen 6", "Add Member", "Update Member Info", "View Members", "Inital Screen");
+        JPanel screen6 = createPanel_6("Screen 6", "Add Member", "Update Member Info", "View Members", "Initial Screen");
         cardPanel.add(screen6, "Screen6");
 
         JPanel screen7 = createScreen7(); //adding member
@@ -136,7 +136,7 @@ public class Graphics extends JFrame {
 
         JLabel L00,L0,L1,L2,L3,L4;
         L00 = new JLabel("  ");
-        L0 = new JLabel("Please fill in information regardign the book you wish to add.",JLabel.CENTER);
+        L0 = new JLabel("Please fill in information regarding the book you wish to add.",JLabel.CENTER);
         L1 = new JLabel("Title: ",JLabel.RIGHT);
         L2 = new JLabel("Author: ",JLabel.RIGHT);
         L3 = new JLabel("ISBN: ",JLabel.RIGHT);
@@ -151,6 +151,13 @@ public class Graphics extends JFrame {
         L2.setLabelFor(textField2);
         L3.setLabelFor(textField3);
         L4.setLabelFor(textField4);
+
+        String Title = textField1.getText();
+        String Author = textField2.getText();
+        String ISBN = textField3.getText();
+        String Quantity = textField4.getText();
+
+
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -195,6 +202,8 @@ public class Graphics extends JFrame {
 
         L1.setLabelFor(textField1);
  
+        String ISBN = textField1.getText();
+
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -241,7 +250,11 @@ public class Graphics extends JFrame {
         L1.setLabelFor(textField1);
         L2.setLabelFor(textField2);
         L3.setLabelFor(textField3);
-  
+
+// allows for strings to be sent to required methods
+        String Title = textField1.getText();
+        String Author = textField2.getText();
+        String Quantity = textField3.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -256,6 +269,7 @@ public class Graphics extends JFrame {
                 cardLayout.show(cardPanel, "initial");
             }
         });
+
         panel.add(L00);
         panel.add(L0);
         panel.add(L1);
@@ -286,6 +300,7 @@ public class Graphics extends JFrame {
 
         L1.setLabelFor(textField1);
  
+        String ISBN = textField1.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -307,6 +322,8 @@ public class Graphics extends JFrame {
         panel.add(backButton);
         panel.add(confirmButton);
         setVisible(true);
+
+
         return panel;
 
     }
@@ -326,6 +343,9 @@ public class Graphics extends JFrame {
                     }
                     if (buttonText.equals("Update Member Info")){       
                         cardLayout.show(cardPanel, "Screen8"); 
+                    }
+                    if (buttonText.equals("Initial Screen")){       
+                        cardLayout.show(cardPanel, "initial"); 
                     }
                     //if (buttonText.equals("View Members")){       
                      //   cardLayout.show(cardPanel, "Screen10"); 
@@ -356,6 +376,9 @@ public class Graphics extends JFrame {
 
         L1.setLabelFor(textField1);
         L2.setLabelFor(textField2);
+
+        String Name = textField1.getText();
+        String Phone_Number = textField2.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -396,6 +419,7 @@ public class Graphics extends JFrame {
 
         L1.setLabelFor(textField1);
  
+        String ISBN = textField1.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -439,6 +463,9 @@ public class Graphics extends JFrame {
   
         L1.setLabelFor(textField1);
         L2.setLabelFor(textField2);
+
+        String Name = textField1.getText();
+        String Phone_Number = textField2.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -487,6 +514,9 @@ public class Graphics extends JFrame {
 
         L1.setLabelFor(textField1);
         L2.setLabelFor(textField2);
+
+        String Member_ID = textField1.getText();
+        String ISBN = textField2.getText();
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
