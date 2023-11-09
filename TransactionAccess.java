@@ -1,11 +1,10 @@
 //MD: 11.5.23
 import java.util.ArrayList;
 
-public class TransactionAccess {//implements AccessInterface {
+public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
     //searchBy unneeded?
-
     public void addItem(Transaction transaction) {
         transactions.add(transaction);
 

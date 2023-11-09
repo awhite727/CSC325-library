@@ -1,0 +1,41 @@
+
+    /* @Override
+    public void addItem(Book book){
+        String[] bookInfo = new String[6];
+        String url;
+        String username;
+        String password;
+        Connection connection;
+        String insertQuery;
+        try {
+            //set up connection
+            url = "DATABASEURL"; // JDBC URL for the database
+            username = "SQLUSERNAME"; // Your MySQL username
+            password = "SQLPASSWORD"; // Your MySQL password
+            connection = DriverManager.getConnection(url, username, password); //connect to url with your user and password
+            //insert statement basically defining the Sql "Books" we're connecting to
+            insertQuery = "INSERT INTO Books (isbn, title, author, genre, totalCopies, availableCopies) VALUES (?, ?, ?, ?, ?, ?)";
+            //Prepping for insertion
+            try (PreparedStatement preparedStatement =
+            connection.prepareStatement(insertQuery)) {
+            // Set the parameter values for the INSERT statement.
+            preparedStatement.setString(1, book.getISBN());
+            preparedStatement.setString(2, book.getTitle());
+            preparedStatement.setString(3, book.getAuthor());
+            preparedStatement.setString(4, book.getGenre());
+            //TO DO: Following 2 have error because expects a string and got an int
+            preparedStatement.setString(5, book.getTotalCopies());
+            preparedStatement.setString(6, book.availableCopies()); //TO DO: Edit once naming corrected
+            //Actually inserting
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+            System.out.println("New user record inserted successfully.");
+            } else {
+            System.out.println("Insert operation failed.");
+            }
+            }
+            connection.close();
+            } catch (SQLException e) {
+            e.printStackTrace();
+            }
+    } */
