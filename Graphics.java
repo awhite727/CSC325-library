@@ -497,7 +497,8 @@ public class Graphics extends JFrame {
         setVisible(true);
         return panel;
     }
-
+    
+/*
     private JPanel createScreen10() {
         f = new JFrame();
  
@@ -522,7 +523,7 @@ public class Graphics extends JFrame {
         // Frame Visible = true
         f.setVisible(true);
     }
- 
+ */
 
 
 
