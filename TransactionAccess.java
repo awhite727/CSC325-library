@@ -1,4 +1,4 @@
-//MD: 11.5.23
+//MD: 11.9.23
 import java.util.ArrayList;
 
 public class TransactionAccess {
@@ -10,7 +10,7 @@ public class TransactionAccess {
 
     }
 
-    public void editItem() {}//NOTE: Is this unnecessary? 
+    public void editItem() {}
 
     public void removeItem(Transaction transaction) {//calculates fees due and updates People fees accrued, then removes the item
         try {

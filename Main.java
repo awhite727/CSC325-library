@@ -1,5 +1,11 @@
+import javax.swing.SwingUtilities;
+
 public class Main {
     public static void main(String[] args) throws Exception {
-        //main class
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new Graphics();
+            }
+        });
     }
 }
