@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,8 +53,8 @@ public class Graphics extends JFrame {
         JPanel screen9 = createScreen9(); // update member info
         cardPanel.add(screen9, "Screen9");
 
-        //JPanel screen10 = createScreen10();  // view members
-        //cardPanel.add(screen10, "Screen10");
+        JPanel screen10 = createScreen10();  // view book
+        cardPanel.add(screen10, "Screen10");
 
 
     // Screen 11 displays the book info
@@ -90,6 +92,9 @@ public class Graphics extends JFrame {
                     }
                     if (buttonText.equals("Member Management")){       
                         cardLayout.show(cardPanel, "Screen6"); 
+                    }
+                    if (buttonText.equals("Book Search")){       
+                        cardLayout.show(cardPanel, "Screen10"); 
                     }
                     if (buttonText.equals("Borrow/Return")){       
                         cardLayout.show(cardPanel, "Screen12"); 
@@ -492,6 +497,31 @@ public class Graphics extends JFrame {
         return panel;
     }
 
+    private JPanel createScreen10() {
+        f = new JFrame();
+ 
+        // Frame Title
+        f.setTitle("Book Data");
+ 
+        // Data to be displayed in the JTable
+        String[][] data = BookAccess.getBooks();
+ 
+        // Column Names
+        String[] columnNames = {};
+ 
+        // Initializing the JTable
+        j = new JTable(data, columnNames);
+        j.setBounds(30, 40, 200, 300);
+ 
+        // adding it to JScrollPane
+        JScrollPane sp = new JScrollPane(j);
+        f.add(sp);
+        // Frame Size
+        f.setSize(500, 200);
+        // Frame Visible = true
+        f.setVisible(true);
+    }
+ 
 
 
 
