@@ -18,7 +18,7 @@ public class Transaction {
     public int getLibraryNumber() {
         return libraryNumber;
     }
-    public String getDueDate() {
+    public Calendar getDueDate() {
         return dueDate;
     }
     //setters for the attributes

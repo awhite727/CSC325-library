@@ -30,5 +30,15 @@ public class EntityManager {
 		Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
 		return transaction;
 	}
+
+	public double calculateFees (Transaction transaction) {
+		// gets dates
+		Calendar dueDate = transaction.getDueDate;
+		Calendar currDate = Calendar.getInstance();
+		// gets days between due date and current date
+		int days = (int) Duration.between(dueDate.toInstant(), currDate.toInstant()).toDays();
+		double fees = days*0.1;		// ten cent fee per day
+		return fees;
+	}
 	
 }
