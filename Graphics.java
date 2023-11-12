@@ -11,11 +11,12 @@ import java.util.ArrayList;
 public class Graphics extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
-    private List<Book> bookList;
+    //private List<Book> bookList;
+    BookAccess bookAccess = new BookAccess();
     
 
-    public Graphics(List<Book> bookList) {
-        this.bookList = bookList;
+    public Graphics() {
+        //this.bookList = bookAccess.getBooks();
         try {
             // Set the look and feel to Metal
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -164,7 +165,7 @@ public class Graphics extends JFrame {
         JLabel L1 = new JLabel("Title: ", JLabel.RIGHT);
         JLabel L2 = new JLabel("Author: ");
         JLabel L3 = new JLabel("ISBN: ");
-        JLabel L4 = new JLabel("Genre: ")
+        JLabel L4 = new JLabel("Genre: ");
         JLabel L5 = new JLabel("Quantity: ");
         L5.setBorder(new EmptyBorder(0, 0, 40, 0));
     
@@ -243,9 +244,11 @@ public class Graphics extends JFrame {
     
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                BookAccess bookAccess = new BookAccess();
+                EntityManager entityManager = new EntityManager();
                 // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
-                bookAccess.addItem(new Book(Title, Author, ISBN, Genre, Quantity));
+                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
             }
         });
     
@@ -681,9 +684,9 @@ public class Graphics extends JFrame {
     private JPanel createScreen10() {
         JPanel panel = new JPanel();
 
-        Object[][] data = new Object[bookList.size()][];
-        for (int i = 0; i < bookList.size(); i++) {
-            Book book = bookList.get(i);
+        Object[][] data = new Object[bookAccess.getBooks().size()][];
+        for (int i = 0; i < bookAccess.getBooks().size(); i++) {
+            Book book = bookAccess.getBooks().get(i);
             data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()};
         }
         // String array for column names

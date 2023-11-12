@@ -5,6 +5,10 @@ public class BookAccess {
     //Or ArrayList of objects; Returns null if not found
     private ArrayList<Book> books = new ArrayList<Book>();
 
+    BookAccess(){
+        books.add(new EntityManager().createBook("The Great Gatsby", "IDKLOL", "123", "Fantasy", "2"));
+    }
+
     public ArrayList<Book> getBooks(){
         return books;
     }
