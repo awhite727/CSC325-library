@@ -5,14 +5,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Graphics extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
     //private List<Book> bookList;
     BookAccess bookAccess = new BookAccess();
+    EntityManager entityManager = new EntityManager();
     
 
     public Graphics() {
@@ -229,11 +228,11 @@ public class Graphics extends JFrame {
         layout.setVerticalGroup(vGroup);
         layout.setHorizontalGroup(hGroup);
 
-        String Title = textField1.getText();
+        /* String Title = textField1.getText();
         String Author = textField2.getText();
         String ISBN = textField3.getText();
         String Genre = textField4.getText();
-        String Quantity = textField5.getText();
+        String Quantity = textField5.getText(); */
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -244,11 +243,16 @@ public class Graphics extends JFrame {
     
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                BookAccess bookAccess = new BookAccess();
-                EntityManager entityManager = new EntityManager();
+                String Title = textField1.getText();
+                String Author = textField2.getText();
+                String ISBN = textField3.getText();
+                String Genre = textField4.getText();
+                String Quantity = textField5.getText();
+
                 // Handle confirm button action here
-                cardLayout.show(cardPanel, "initial");
-                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
+                Book book = entityManager.createBook(Title, Author, ISBN, Genre, Quantity);
+                                bookAccess.addItem(book);
+                                cardLayout.show(cardPanel, "initial");
             }
         });
     
