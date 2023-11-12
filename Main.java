@@ -19,7 +19,7 @@ public class Main {
         */
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Graphics();
+                new Graphics(bookAccess.getBooks());
             }
         });
     }
