@@ -43,8 +43,8 @@ public class Graphics extends JFrame {
 
         JPanel screen3 = createScreen3();   //updating book: Specifying ISBN
         cardPanel.add(screen3, "Screen3");
-
-        JPanel screen4 = createScreen4();   //updating book info
+        String ISBN = "";
+        JPanel screen4 = createScreen4(ISBN);   //updating book info
         cardPanel.add(screen4, "Screen4");
 
         JPanel screen5 = createScreen5();   //removing book
@@ -307,6 +307,8 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String ISBN = textField1.getText();
+                createScreen4(ISBN);
                 cardLayout.show(cardPanel, "Screen4");
             }
         });
@@ -315,7 +317,7 @@ public class Graphics extends JFrame {
 
     }
 
-    private JPanel createScreen4() {
+    private JPanel createScreen4(String ISBN) {
         
 
         JPanel panel = new JPanel();
@@ -383,10 +385,22 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(cardPanel, "initial");
+                //cardLayout.show(cardPanel, "initial");
+        
+
+            
+            // Update the book details based on user input
+            System.out.println("details: "+bookAccess.searchByISBN(ISBN));
+
+            (bookAccess.searchByISBN(ISBN)).setTitle(textField1.getText());
+            (bookAccess.searchByISBN(ISBN)).setAuthor(textField2.getText());
+
+            //book.setQuantity(textField3.getText());
+            JPanel screen10 = createScreen10();
+            cardPanel.add(screen10, "Screen10");
             }
         });
-
+    
 
         return panel;
     }
