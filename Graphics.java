@@ -5,17 +5,16 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class Graphics extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
-    //private List<Book> bookList;
-    BookAccess bookAccess = new BookAccess();
+    BookAccess bookAccess = BookAccess.getInstance();
     EntityManager entityManager = new EntityManager();
     
 
     public Graphics() {
-        //this.bookList = bookAccess.getBooks();
         try {
             // Set the look and feel to Metal
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -228,12 +227,7 @@ public class Graphics extends JFrame {
         layout.setVerticalGroup(vGroup);
         layout.setHorizontalGroup(hGroup);
 
-        /* String Title = textField1.getText();
-        String Author = textField2.getText();
-        String ISBN = textField3.getText();
-        String Genre = textField4.getText();
-        String Quantity = textField5.getText(); */
-
+        
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Handle back button action here
@@ -250,8 +244,9 @@ public class Graphics extends JFrame {
                 String Quantity = textField5.getText();
 
                 // Handle confirm button action here
-                Book book = entityManager.createBook(Title, Author, ISBN, Genre, Quantity);
-                                bookAccess.addItem(book);
+                                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
+                                JPanel screen10 = createScreen10();  // view book
+                                cardPanel.add(screen10, "Screen10");
                                 cardLayout.show(cardPanel, "initial");
             }
         });
@@ -686,11 +681,12 @@ public class Graphics extends JFrame {
     
     
     private JPanel createScreen10() {
+        System.out.println("In createScreen10");
         JPanel panel = new JPanel();
-
-        Object[][] data = new Object[bookAccess.getBooks().size()][];
-        for (int i = 0; i < bookAccess.getBooks().size(); i++) {
-            Book book = bookAccess.getBooks().get(i);
+        List<Book> copyOfBooks = bookAccess.getBooks();
+        Object[][] data = new Object[copyOfBooks.size()][];
+        for (int i = 0; i < copyOfBooks.size(); i++) {
+            Book book = copyOfBooks.get(i);
             data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()};
         }
         // String array for column names

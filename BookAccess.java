@@ -1,17 +1,26 @@
 //MD: 11.9.23
+import java.util.List;
 import java.util.ArrayList;
 public class BookAccess {
     //searchBy methods: gets a search element (i.e. isbn) as a parameter, and returns the corresponding object
     //Or ArrayList of objects; Returns null if not found
-    private ArrayList<Book> books = new ArrayList<Book>();
+    private List<Book> books = new ArrayList<Book>();
+    private static BookAccess bookAccess = null;
 
     BookAccess(){
         books.add(new Book("The Great Gatsby", "IDKLOL", "123", "Fantasy", 2));
     }
 
-    public ArrayList<Book> getBooks(){
+    public static BookAccess getInstance(){
+        if(bookAccess == null){
+        bookAccess = new BookAccess();
+        }
+        return bookAccess;
+    }
+
+    public List<Book> getBooks(){
         for(int i=0;i<books.size();i++){
-            books.get(i).getISBN();
+            System.out.println(i + ": " + books.get(i).getISBN());
         }
         return books;
     }
