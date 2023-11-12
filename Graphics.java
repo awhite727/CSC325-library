@@ -1,20 +1,30 @@
 import javax.swing.*;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Graphics extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
+    private List<Book> bookList;
     
 
-    public Graphics() {
+    public Graphics(List<Book> bookList) {
+        this.bookList = bookList;
+        try {
+            // Set the look and feel to Metal
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+        } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         // Set up the JFrame
         setTitle("Multi-Screen Navigation GUI");
-        setSize(1250, 650);
+        setSize(900, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Create a CardLayout for switching between screens
@@ -26,7 +36,7 @@ public class Graphics extends JFrame {
         cardPanel.add(initialScreen, "initial");
 
     // Screens 1 - 5 are associated with Book Management 
-        JPanel screen1 = createPanel_1("Screen 1", "Add Book", "Update Book", "Remove Book", "Inital Screen");
+        JPanel screen1 = createPanel_1("Screen 1", "Add Book", "Update Book", "Remove Book", "Initial Screen");
         cardPanel.add(screen1, "Screen1");
 
         JPanel screen2 = createScreen2();   //adding book
@@ -82,8 +92,11 @@ public class Graphics extends JFrame {
 
     private JPanel createPanel_Initial(String panelName, String... buttonTexts) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4,1,3,1));
+        panel.setLayout(new GridLayout(5,15,3,1));
+        JLabel L0;
 
+        L0 = new JLabel("<html><b>Thank you for choosing to use this Library Managemet System! Please choose the button corresponding to your needs.</b></html>",JLabel.CENTER);
+        panel.add(L0);
         for (String buttonText : buttonTexts) {
             JButton button = new JButton(buttonText);
             button.addActionListener(new ActionListener() {
@@ -101,13 +114,15 @@ public class Graphics extends JFrame {
                         cardLayout.show(cardPanel, "Screen12"); 
                     }
                 }
+                
             });
+            
             panel.add(button);
         }
-
+    
+        
         return panel;
     }
-
     private JPanel createPanel_1(String panelName, String... buttonTexts) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5,2,3,1));
@@ -125,6 +140,9 @@ public class Graphics extends JFrame {
                     if (buttonText.equals("Remove Book")){       
                         cardLayout.show(cardPanel, "Screen5"); 
                     }
+                    if (buttonText.equals("Initial Screen")){       
+                        cardLayout.show(cardPanel, "initial"); 
+                    }
                 }
             });
             panel.add(button);
@@ -134,103 +152,148 @@ public class Graphics extends JFrame {
     }
 
 
+
     private JPanel createScreen2() {
-        
-
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
-
-        JLabel L00,L0,L1,L2,L3,L4;
-        L00 = new JLabel("  ");
-        L0 = new JLabel("Please fill in information regarding the book you wish to add.",JLabel.CENTER);
-        L1 = new JLabel("Title: ",JLabel.RIGHT);
-        L2 = new JLabel("Author: ",JLabel.RIGHT);
-        L3 = new JLabel("ISBN: ",JLabel.RIGHT);
-        L4 = new JLabel("Quantity: ",JLabel.RIGHT);
-        // Add a text box (JTextField)
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        
+        JLabel L0 = new JLabel(" Please fill in information regarding the book you wish to add:");
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
+        JLabel L1 = new JLabel("Title: ", JLabel.RIGHT);
+        JLabel L2 = new JLabel("Author: ");
+        JLabel L3 = new JLabel("ISBN: ");
+        JLabel L4 = new JLabel("Quantity: ");
+        L4.setBorder(new EmptyBorder(0, 0, 40, 0));
+    
         JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
         JTextField textField3 = new JTextField(10);
         JTextField textField4 = new JTextField(10);
 
-        L1.setLabelFor(textField1);
-        L2.setLabelFor(textField2);
-        L3.setLabelFor(textField3);
-        L4.setLabelFor(textField4);
-
-        String Title = textField1.getText();
-        String Author = textField2.getText();
-        String ISBN = textField3.getText();
-        String Quantity = textField4.getText();
-
-
-
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+        textField3.setMaximumSize(new Dimension(250, textField3.getPreferredSize().height));
+        textField4.setMaximumSize(new Dimension(250, textField4.getPreferredSize().height));
+    
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+    
+        //layout.setAutoCreateGaps(true);
+        //layout.setAutoCreateContainerGaps(true);
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L2)
+                        .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L3)
+                        .addComponent(textField3))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L4)
+                        .addComponent(textField4))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(L3)
+                        .addComponent(L4)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(textField2)
+                        .addComponent(textField3)
+                        .addComponent(textField4)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle back button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        JButton confirmButton = new JButton("Confirm");
+    
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(L2);
-        panel.add(textField2);
-        panel.add(L3);
-        panel.add(textField3);
-        panel.add(L4);
-        panel.add(textField4);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+    
         return panel;
     }
+    
+    
+    
 
     private JPanel createScreen3() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
 
-        JLabel L00,L0,L1;
-        L00 = new JLabel("  ");
+        JLabel L0,L1;
         L0 = new JLabel("Please enter the ISBN of the book you would like to update.",JLabel.CENTER);
-        L1 = new JLabel("ISBN",JLabel.RIGHT);
-        // Add a text box (JTextField)
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0));
+        L1 = new JLabel("ISBN: ");
+        L1.setBorder(new EmptyBorder(0, 0, 40, 0));
+        
         JTextField textField1= new JTextField(10);
-
-
-        L1.setLabelFor(textField1);
- 
-        String ISBN = textField1.getText();
-
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        
 
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+        
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
 
-        JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "Screen4");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+
         return panel;
 
     }
@@ -239,101 +302,137 @@ public class Graphics extends JFrame {
         
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
 
-        JLabel L00,L0,L1,L2,L3;
-        L00 = new JLabel("  ");
-        L0 = new JLabel("Type in the boxes whose category you would like to update. Leave other boxes blank.",JLabel.CENTER);
+        JLabel L0,L1,L2,L3;
+        L0 = new JLabel("Type in the boxes whose category you would like to update.",JLabel.CENTER);
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
         L1 = new JLabel("Title: ",JLabel.RIGHT);
         L2 = new JLabel("Author: ",JLabel.RIGHT);
         L3 = new JLabel("Quantity: ",JLabel.RIGHT);
+        L3.setBorder(new EmptyBorder(0, 0, 40, 0));
         // Add a text box (JTextField)
         JTextField textField1= new JTextField(10);
         JTextField textField2 = new JTextField(10);
         JTextField textField3 = new JTextField(10);
     
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+        textField3.setMaximumSize(new Dimension(250, textField3.getPreferredSize().height));
 
-        L1.setLabelFor(textField1);
-        L2.setLabelFor(textField2);
-        L3.setLabelFor(textField3);
+        JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L2)
+                        .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L3)
+                        .addComponent(textField3))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(L3)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(textField2)
+                        .addComponent(textField3)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
 
 // allows for strings to be sent to required methods
-        String Title = textField1.getText();
-        String Author = textField2.getText();
-        String Quantity = textField3.getText();
 
-        JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
 
-        JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
 
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(L2);
-        panel.add(textField2);
-        panel.add(L3);
-        panel.add(textField3);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+
         return panel;
     }
 
 
-
-    private JPanel createScreen5() {
+   private JPanel createScreen5() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
 
-        JLabel L00,L0,L1;
-        L00 = new JLabel("  ");
+        JLabel L0,L1;
         L0 = new JLabel("Please enter the ISBN of the book you would like to remove.",JLabel.CENTER);
-        L1 = new JLabel("ISBN",JLabel.RIGHT);
-        // Add a text box (JTextField)
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0));
+        L1 = new JLabel("ISBN: ");
+        L1.setBorder(new EmptyBorder(0, 0, 40, 0));
+        
         JTextField textField1= new JTextField(10);
-
-
-        L1.setLabelFor(textField1);
- 
-        String ISBN = textField1.getText();
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        
 
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+        
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
 
-        JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
-
 
         return panel;
 
     }
-
+   
 
 
     private JPanel createPanel_6(String panelName, String... buttonTexts) {
@@ -364,191 +463,244 @@ public class Graphics extends JFrame {
         return panel;
     }
 
-
     private JPanel createScreen7() {
-        
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        
+        JLabel L0 = new JLabel(" Please fill in information regarding the new Library Member:");
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
+        JLabel L1 = new JLabel("Name: ", JLabel.RIGHT);
+        JLabel L2 = new JLabel("Phone Number: ");
 
-        JLabel L00,L0,L1,L2;
-        L00 = new JLabel("  ");
-        L0 = new JLabel("Please fill in information regarding the new Library Member.",JLabel.CENTER);
-        L1 = new JLabel("Name: ",JLabel.RIGHT);
-        L2 = new JLabel("Phone Number: ",JLabel.RIGHT);
-
-        // Add a text box (JTextField)
-        JTextField textField1= new JTextField(10);
+        L2.setBorder(new EmptyBorder(0, 0, 40, 0));
+    
+        JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
 
-        L1.setLabelFor(textField1);
-        L2.setLabelFor(textField2);
 
-        String Name = textField1.getText();
-        String Phone_Number = textField2.getText();
-
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+    
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+    
+        //layout.setAutoCreateGaps(true);
+        //layout.setAutoCreateContainerGaps(true);
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L2)
+                        .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(textField2)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle back button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        JButton confirmButton = new JButton("Confirm");
+    
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(L2);
-        panel.add(textField2);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+    
         return panel;
     }
 
-    private JPanel createScreen8() {
+       private JPanel createScreen8() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
 
-        JLabel L00,L0,L1;
-        L00 = new JLabel("  ");
+        JLabel L0,L1;
         L0 = new JLabel("Please enter the ID of the member you would like to update.",JLabel.CENTER);
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
         L1 = new JLabel("ISBN",JLabel.RIGHT);
-        // Add a text box (JTextField)
+        L1.setBorder(new EmptyBorder(0, 0, 40, 0));
+        
         JTextField textField1= new JTextField(10);
-
-
-        L1.setLabelFor(textField1);
- 
-        String ISBN = textField1.getText();
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        
 
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+        
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
 
-        JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "Screen9");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+
         return panel;
 
     }
 
+
     private JPanel createScreen9() {
-        
-
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        
+        JLabel L0 = new JLabel("Type in the boxes whose category you would like to update: ");
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
+        JLabel L1 = new JLabel("Name: ", JLabel.RIGHT);
+        JLabel L2 = new JLabel("Phone Number: ");
 
-        JLabel L00,L0,L1,L2;
-        L00 = new JLabel("  ");
-        L0 = new JLabel("Type in the boxes whose category you would like to update. Leave other boxes blank.",JLabel.CENTER);
-        L1 = new JLabel("Name: ",JLabel.RIGHT);
-        L2 = new JLabel("Phone: ",JLabel.RIGHT);
-
-        // Add a text box (JTextField)
-        JTextField textField1= new JTextField(10);
+        L2.setBorder(new EmptyBorder(0, 0, 40, 0));
+    
+        JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
-  
-        L1.setLabelFor(textField1);
-        L2.setLabelFor(textField2);
 
-        String Name = textField1.getText();
-        String Phone_Number = textField2.getText();
 
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+    
         JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+    
+        //layout.setAutoCreateGaps(true);
+        //layout.setAutoCreateContainerGaps(true);
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L2)
+                        .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
+
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(textField2)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle back button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        JButton confirmButton = new JButton("Confirm");
+    
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
             }
         });
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(L2);
-        panel.add(textField2);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        setVisible(true);
+    
         return panel;
     }
     
-/*
+    
     private JPanel createScreen10() {
-        f = new JFrame();
- 
-        // Frame Title
-        f.setTitle("Book Data");
- 
-        // Data to be displayed in the JTable
-        ArrayList data = BookAccess.getBooks();
- 
-        // Column Names
-        String[] columnNames = {};
- 
-        // Initializing the JTable
-        j = new JTable(data, columnNames);
-        j.setBounds(30, 40, 200, 300);
- 
-        // adding it to JScrollPane
-        JScrollPane sp = new JScrollPane(j);
-        f.add(sp);
-        // Frame Size
-        f.setSize(500, 200);
-        // Frame Visible = true
-        f.setVisible(true);
-    }
- */
-
-
-
-
-
-    private JPanel createScreen12() {
-        
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
 
-        JLabel L00,L0,L1,L2;
-        L00 = new JLabel("  ");
-        L0 = new JLabel("Please enter the Member ID and ISBN of the book being borrowed or returned.",JLabel.CENTER);
-        L1 = new JLabel("Member ID: ",JLabel.RIGHT);
-        L2 = new JLabel("ISBN: ",JLabel.RIGHT);
+        Object[][] data = new Object[bookList.size()][];
+        for (int i = 0; i < bookList.size(); i++) {
+            Book book = bookList.get(i);
+            data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()};
+        }
+        // String array for column names
+        String[] columns = new String[]{"ISBN","Title","Author","Genre","Total Copies"};
+        // 2D array for table data
 
-        // Add a text box (JTextField)
-        JTextField textField1= new JTextField(10);
-        JTextField textField2 = new JTextField(10);
+        // Class array for column classes
+        final Class[] columnClass = new Class[]{String.class, String.class, String.class,String.class, int.class};
 
-        L1.setLabelFor(textField1);
-        L2.setLabelFor(textField2);
+        // Create table model with data
+        DefaultTableModel model = new DefaultTableModel(data, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
 
-        String Member_ID = textField1.getText();
-        String ISBN = textField2.getText();
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnClass[columnIndex];
+            }
+        };
+
+        // Create JTable with the model
+        JTable table = new JTable(model);
+        table.setShowGrid(true);
+        table.setShowHorizontalLines(true);
+        table.setShowVerticalLines(true);
+        // Set up the panel layout
+        panel.setLayout(new BorderLayout());
+
+        // Add the table to the panel with a JScrollPane
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -557,31 +709,93 @@ public class Graphics extends JFrame {
             }
         });
 
-        JButton confirmButton = new JButton("Confirm (Returning)");
-        confirmButton.addActionListener(new ActionListener() {
+        panel.add(backButton, BorderLayout.NORTH);
+
+        return panel;
+    }
+
+
+
+
+
+
+    
+    private JPanel createScreen12() {
+        JPanel panel = new JPanel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        
+        JLabel L0 = new JLabel("Please enter the Member ID and ISBN of the book being borrowed or returned.");
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
+        JLabel L1 = new JLabel("Member ID: ", JLabel.RIGHT);
+        JLabel L2 = new JLabel("ISBN: ");
+        L2.setBorder(new EmptyBorder(0, 0, 40, 0));
+    
+        JTextField textField1 = new JTextField(10);
+        JTextField textField2 = new JTextField(10);
+
+
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+    
+        JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton1 = new JButton("Confirm (Returning)");
+        JButton confirmButton2 = new JButton("Confirm (Borrowing)");
+    
+        //layout.setAutoCreateGaps(true);
+        //layout.setAutoCreateContainerGaps(true);
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L2)
+                        .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton1)
+                        .addComponent(confirmButton2));
+
+
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(textField2)
+                        .addComponent(confirmButton1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(confirmButton2));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+        backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle back button action here
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+    
+        confirmButton1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Handle confirm button action here
                 cardLayout.show(cardPanel, "Screen13");
             }
         });
-    // confirmButton2 allows us to see the book borrowing screen until we implement 
-    // the conditional that checks if the book is currently checked out by member.
-        JButton confirmButton2 = new JButton("Confirm (Borrowed)");
         confirmButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Handle confirm button action here
                 cardLayout.show(cardPanel, "Screen14");
             }
         });
-
-        panel.add(L00);
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(textField1);
-        panel.add(L2);
-        panel.add(textField2);
-        panel.add(backButton);
-        panel.add(confirmButton);
-        panel.add(confirmButton2);
-        setVisible(true);
+    
         return panel;
     }
 
@@ -632,7 +846,6 @@ public class Graphics extends JFrame {
         setVisible(true);
         return panel;
     }
-
 
 
     
