@@ -541,7 +541,7 @@ public class Graphics extends JFrame {
         JLabel L0,L1;
         L0 = new JLabel("Please enter the ID of the member you would like to update.",JLabel.CENTER);
         L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
-        L1 = new JLabel("ISBN",JLabel.RIGHT);
+        L1 = new JLabel("Member ID: ",JLabel.RIGHT);
         L1.setBorder(new EmptyBorder(0, 0, 40, 0));
         
         JTextField textField1= new JTextField(10);
