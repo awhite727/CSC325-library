@@ -43,9 +43,10 @@ public class Graphics extends JFrame {
 
         JPanel screen3 = createScreen3();   //updating book: Specifying ISBN
         cardPanel.add(screen3, "Screen3");
-        String ISBN = "";
-        JPanel screen4 = createScreen4(ISBN);   //updating book info
-        cardPanel.add(screen4, "Screen4");
+
+        //String ISBN = "";
+        //JPanel screen4 = createScreen4(ISBN);   //updating book info
+        //cardPanel.add(screen4, "Screen4");
 
         JPanel screen5 = createScreen5();   //removing book
         cardPanel.add(screen5, "Screen5");
@@ -307,8 +308,9 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String ISBN = textField1.getText();
-                createScreen4(ISBN);
+                String ISBN1 = textField1.getText();
+                JPanel screen4 = createScreen4(ISBN1);
+                cardPanel.add(screen4, "Screen4");
                 cardLayout.show(cardPanel, "Screen4");
             }
         });
@@ -324,21 +326,25 @@ public class Graphics extends JFrame {
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
 
-        JLabel L0,L1,L2,L3;
+        JLabel L0,L1,L2,L3,L4;
         L0 = new JLabel("Type in the boxes whose category you would like to update.",JLabel.CENTER);
         L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
         L1 = new JLabel("Title: ",JLabel.RIGHT);
         L2 = new JLabel("Author: ",JLabel.RIGHT);
-        L3 = new JLabel("Quantity: ",JLabel.RIGHT);
-        L3.setBorder(new EmptyBorder(0, 0, 40, 0));
+        L3 = new JLabel("Genre: ",JLabel.RIGHT);
+        L4 = new JLabel("Quantity: ",JLabel.RIGHT);
+        L4.setBorder(new EmptyBorder(0, 0, 40, 0));
         // Add a text box (JTextField)
         JTextField textField1= new JTextField(10);
         JTextField textField2 = new JTextField(10);
         JTextField textField3 = new JTextField(10);
+        JTextField textField4 = new JTextField(10);
     
         textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
         textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
         textField3.setMaximumSize(new Dimension(250, textField3.getPreferredSize().height));
+        textField4.setMaximumSize(new Dimension(250, textField3.getPreferredSize().height));
+
 
         JButton backButton = new JButton("Back to Initial");
         JButton confirmButton = new JButton("Confirm");
@@ -355,6 +361,9 @@ public class Graphics extends JFrame {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(L3)
                         .addComponent(textField3))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L4)
+                        .addComponent(textField4))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backButton)
                         .addComponent(confirmButton));
@@ -365,11 +374,13 @@ public class Graphics extends JFrame {
                         .addComponent(L1)
                         .addComponent(L2)
                         .addComponent(L3)
+                        .addComponent(L4)
                         .addComponent(backButton))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textField1)
                         .addComponent(textField2)
                         .addComponent(textField3)
+                        .addComponent(textField4)
                         .addComponent(confirmButton));
     
         layout.setVerticalGroup(vGroup);
@@ -388,12 +399,14 @@ public class Graphics extends JFrame {
                 //cardLayout.show(cardPanel, "initial");
         
 
-            
+            System.out.println("ISBN" + ISBN);
             // Update the book details based on user input
             System.out.println("details: "+bookAccess.searchByISBN(ISBN));
 
             (bookAccess.searchByISBN(ISBN)).setTitle(textField1.getText());
             (bookAccess.searchByISBN(ISBN)).setAuthor(textField2.getText());
+            (bookAccess.searchByISBN(ISBN)).setGenre(textField3.getText());                       
+            (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
 
             //book.setQuantity(textField3.getText());
             JPanel screen10 = createScreen10();
