@@ -14,8 +14,17 @@ public class EntityManager {
 	// creates a People object
 	public People createPeople (String libraryNumber, String firstName, String lastName, String phoneNumber) {
         // passes parameters into People
-		People people = new People(libraryNumber, firstName, lastName, phoneNumber);
-		return people;
+		try{
+			int libraryNumberInt = Integer.parseInt(libraryNumber);
+			People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
+			return people;
+			
+		} catch(IllegalArgumentException e){
+			System.out.println(libraryNumber + " is not an integer");
+			e.printStackTrace();
+			return null; 
+		}
+		
 	}
 	// creates a Transaction object
 	public Transaction createTransaction (String ISBN, String libraryNumber) {
@@ -34,13 +43,13 @@ public class EntityManager {
 	// calculates fees due for a transaction
 	public double calculateFees (Transaction transaction) {
 		// gets dates
-		Calendar dueDate = transaction.getDueDate;
+		Calendar dueDate = transaction.getDueDate();
 		Calendar currDate = Calendar.getInstance();
 		double fees = 0.0;
 		if (dueDate.before(currDate)) {		// checks that the book is late
 			// gets days between due date and current date
 			int days = (int) Duration.between(dueDate.toInstant(), currDate.toInstant()).toDays();
-			double fees = days*0.1;		// ten cent fee per day
+			fees = days*0.1;		// ten cent fee per day
 		}
 		return fees;
 	}
