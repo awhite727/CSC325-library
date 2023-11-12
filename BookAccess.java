@@ -26,9 +26,10 @@ public class BookAccess {
     }
 
     public Book searchByISBN(String ISBN) {
+        ISBN = ISBN.strip();
         String checkISBN = "";
         for (int i=0; i<books.size();i++){
-            checkISBN = books.get(i).getISBN();
+            checkISBN = books.get(i).getISBN().strip();
             if (ISBN.equalsIgnoreCase(checkISBN)){
                 return books.get(i);
             }
@@ -37,10 +38,11 @@ public class BookAccess {
     }
 
     public ArrayList<Book> searchByAuthor(String author) {
+        author = author.strip();
         ArrayList<Book> allByAuthor = new ArrayList<>();
         String checkAuthor = "";
         for (int i=0; i<books.size();i++){
-            checkAuthor = books.get(i).getAuthor();
+            checkAuthor = books.get(i).getAuthor().strip();
             if (author.equalsIgnoreCase(checkAuthor)){
                 allByAuthor.add(books.get(i));
             }
@@ -52,10 +54,11 @@ public class BookAccess {
     }
 
     public ArrayList<Book> searchByTitle(String title) {
+        title = title.strip();
         ArrayList<Book> allOfTitle = new ArrayList<>();
         String checkTitle = "";
         for (int i=0; i<books.size();i++){
-            checkTitle = books.get(i).getTitle();
+            checkTitle = books.get(i).getTitle().strip();
             if (title.equalsIgnoreCase(checkTitle)){
                 allOfTitle.add(books.get(i));
             }
@@ -67,10 +70,11 @@ public class BookAccess {
     }
 
     public ArrayList<Book> searchByGenre(String genre) {
+        genre = genre.strip();
         ArrayList<Book> allOfGenre = new ArrayList<>();
         String checkGenre = "";
         for (int i=0; i<books.size();i++){
-            checkGenre = books.get(i).getGenre();
+            checkGenre = books.get(i).getGenre().strip();
             if (genre.equalsIgnoreCase(checkGenre)){
                 allOfGenre.add(books.get(i));
             }
