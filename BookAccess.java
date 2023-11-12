@@ -10,6 +10,9 @@ public class BookAccess {
     }
 
     public ArrayList<Book> getBooks(){
+        for(int i=0;i<books.size();i++){
+            books.get(i).getISBN();
+        }
         return books;
     }
 
