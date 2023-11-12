@@ -476,6 +476,11 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String ISBN2 = textField1.getText();
+                bookAccess.removeItem(bookAccess.searchByISBN(ISBN2));
+                JPanel screen10 = createScreen10();
+                cardPanel.add(screen10, "Screen10");
+                
                 cardLayout.show(cardPanel, "initial");
             }
         });
