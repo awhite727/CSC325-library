@@ -7,10 +7,10 @@ public class Book {
     private int totalCopies;
     private int availableCopies;
     //constructor method
-    public Book(String ISBN, String title, String author, String genre, int copies) {
-        this.ISBN = ISBN;
+    public Book(String title, String author, String ISBN, String genre, int copies) {
         this.title = title;
         this.author = author;
+        this.ISBN = ISBN;
         this.genre = genre;
         totalCopies = copies;       //when initialized, book has an equal number of available and total copies
         availableCopies = copies;
