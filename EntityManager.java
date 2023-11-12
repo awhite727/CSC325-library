@@ -5,11 +5,11 @@ import java.util.Date;
 
 public class EntityManager {
 	// creates a Book object
-	public Book createBook (String title, String author, String ISBN, String genre, String copies) {
+	public Book createBook (String ISBN, String title, String author, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
 		try{
 			int copyInt = Integer.parseInt(copies);
-			Book book = new Book(title, author, ISBN, genre, copyInt);
+			Book book = new Book(ISBN, title, author, genre, copyInt);
 			return book;
 			
 		} catch(IllegalArgumentException e){
