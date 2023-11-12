@@ -7,9 +7,16 @@ public class EntityManager {
 	// creates a Book object
 	public Book createBook (String title, String author, String ISBN, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
-		int copyInt = Integer.parseInt(copies);
-		Book book = new Book(title, author, ISBN, genre, copyInt);
-		return book;
+		try{
+			int copyInt = Integer.parseInt(copies);
+			Book book = new Book(title, author, ISBN, genre, copyInt);
+			return book;
+			
+		} catch(IllegalArgumentException e){
+			System.out.println(copies + " is not an integer");
+			e.printStackTrace();
+			return null; 
+		}
 	}
 	// creates a People object
 	public People createPeople (String libraryNumber, String firstName, String lastName, String phoneNumber) {
@@ -29,16 +36,22 @@ public class EntityManager {
 	// creates a Transaction object
 	public Transaction createTransaction (String ISBN, String libraryNumber) {
         // converts libraryNumber to an integer
-		int libraryNumberInt = Integer.parseInt(libraryNumber);
-        // gets the current date
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
-		Calendar dueDate = Calendar.getInstance();
-		dueDate.setTime(new Date());
-        //adds 21 days to the current date
-		dueDate.add(Calendar.DATE, 21);
-        // passes parameters into Transaction		
-		Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
-		return transaction;
+		try{
+			int libraryNumberInt = Integer.parseInt(libraryNumber);
+			// gets the current date
+			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
+			Calendar dueDate = Calendar.getInstance();
+			dueDate.setTime(new Date());
+        	//adds 21 days to the current date
+			dueDate.add(Calendar.DATE, 21);
+        	// passes parameters into Transaction		
+			Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
+			return transaction;
+		} catch(IllegalArgumentException e){
+			System.out.println(libraryNumber + " is not an integer");
+			e.printStackTrace();
+			return null; 
+		}
 	}
 	// calculates fees due for a transaction
 	public double calculateFees (Transaction transaction) {
