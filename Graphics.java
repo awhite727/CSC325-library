@@ -164,18 +164,21 @@ public class Graphics extends JFrame {
         JLabel L1 = new JLabel("Title: ", JLabel.RIGHT);
         JLabel L2 = new JLabel("Author: ");
         JLabel L3 = new JLabel("ISBN: ");
-        JLabel L4 = new JLabel("Quantity: ");
-        L4.setBorder(new EmptyBorder(0, 0, 40, 0));
+        JLabel L4 = new JLabel("Genre: ")
+        JLabel L5 = new JLabel("Quantity: ");
+        L5.setBorder(new EmptyBorder(0, 0, 40, 0));
     
         JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
         JTextField textField3 = new JTextField(10);
         JTextField textField4 = new JTextField(10);
+        JTextField textField5 = new JTextField(10);
 
         textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
         textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
         textField3.setMaximumSize(new Dimension(250, textField3.getPreferredSize().height));
         textField4.setMaximumSize(new Dimension(250, textField4.getPreferredSize().height));
+        textField5.setMaximumSize(new Dimension(250, textField4.getPreferredSize().height));
     
         JButton backButton = new JButton("Back to Initial");
         JButton confirmButton = new JButton("Confirm");
@@ -198,6 +201,9 @@ public class Graphics extends JFrame {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(L4)
                         .addComponent(textField4))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L5)
+                        .addComponent(textField5))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backButton)
                         .addComponent(confirmButton));
@@ -209,16 +215,24 @@ public class Graphics extends JFrame {
                         .addComponent(L2)
                         .addComponent(L3)
                         .addComponent(L4)
+                        .addComponent(L5)
                         .addComponent(backButton))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textField1)
                         .addComponent(textField2)
                         .addComponent(textField3)
                         .addComponent(textField4)
+                        .addComponent(textField5)
                         .addComponent(confirmButton));
     
         layout.setVerticalGroup(vGroup);
         layout.setHorizontalGroup(hGroup);
+
+        String Title = textField1.getText();
+        String Author = textField2.getText();
+        String ISBN = textField3.getText();
+        String Genre = textField4.getText();
+        String Quantity = textField5.getText();
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -231,6 +245,7 @@ public class Graphics extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
+                bookAccess.addItem(new Book(Title, Author, ISBN, Genre, Quantity));
             }
         });
     
