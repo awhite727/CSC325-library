@@ -694,7 +694,7 @@ public class Graphics extends JFrame {
         // 2D array for table data
 
         // Class array for column classes
-        final Class[] columnClass = new Class[]{String.class, String.class, String.class,String.class, int.class};
+        final Class[] columnClass = new Class[]{String.class, String.class, String.class,String.class, String.class};
 
         // Create table model with data
         DefaultTableModel model = new DefaultTableModel(data, columns) {
