@@ -402,13 +402,20 @@ public class Graphics extends JFrame {
             System.out.println("ISBN" + ISBN);
             // Update the book details based on user input
             System.out.println("details: "+bookAccess.searchByISBN(ISBN));
-
-            (bookAccess.searchByISBN(ISBN)).setTitle(textField1.getText());
-            (bookAccess.searchByISBN(ISBN)).setAuthor(textField2.getText());
-            (bookAccess.searchByISBN(ISBN)).setGenre(textField3.getText());                       
-            (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
-
-            //book.setQuantity(textField3.getText());
+            
+            if (textField1.getText().equals("")== false){
+                (bookAccess.searchByISBN(ISBN)).setTitle(textField1.getText());
+            }
+            if (textField2.getText().equals("")== false){
+                (bookAccess.searchByISBN(ISBN)).setAuthor(textField2.getText());
+            }
+            if (textField3.getText().equals("")== false){
+                (bookAccess.searchByISBN(ISBN)).setGenre(textField3.getText()); 
+            }
+            if (textField4.getText().equals("")== false){                      
+                (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
+            }
+  
             JPanel screen10 = createScreen10();
             cardPanel.add(screen10, "Screen10");
             }
