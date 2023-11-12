@@ -1,11 +1,12 @@
 //MD: 11.9.23
+import java.util.List;
 import java.util.ArrayList;
 public class BookAccess {
     //searchBy methods: gets a search element (i.e. isbn) as a parameter, and returns the corresponding object
     //Or ArrayList of objects; Returns null if not found
-    private ArrayList<Book> books = new ArrayList<Book>();
+    private List<Book> books = new ArrayList<Book>();
 
-    public ArrayList<Book> getBooks(){
+    public List<Book> getBooks(){
         return books;
     }
 
@@ -20,8 +21,8 @@ public class BookAccess {
         return null;
     }
 
-    public ArrayList<Book> searchByAuthor(String author) {
-        ArrayList<Book> allByAuthor = new ArrayList<>();
+    public List<Book> searchByAuthor(String author) {
+        List<Book> allByAuthor = new ArrayList<>();
         String checkAuthor = "";
         for (int i=0; i<books.size();i++){
             checkAuthor = books.get(i).getAuthor();
@@ -35,7 +36,7 @@ public class BookAccess {
         return allByAuthor;
     }
 
-    public ArrayList<Book> searchByTitle(String title) {
+    public List<Book> searchByTitle(String title) {
         ArrayList<Book> allOfTitle = new ArrayList<>();
         String checkTitle = "";
         for (int i=0; i<books.size();i++){
@@ -50,8 +51,8 @@ public class BookAccess {
         return allOfTitle;
     }
 
-    public ArrayList<Book> searchByGenre(String genre) {
-        ArrayList<Book> allOfGenre = new ArrayList<>();
+    public List<Book> searchByGenre(String genre) {
+        List<Book> allOfGenre = new ArrayList<>();
         String checkGenre = "";
         for (int i=0; i<books.size();i++){
             checkGenre = books.get(i).getGenre();

@@ -1,9 +1,10 @@
 //MD: 11.9.23
 import java.util.ArrayList;
+import java.util.List;
 public class PersonAccess {
-    private ArrayList<People> people = new ArrayList<People>();
+    private List<People> people = new ArrayList<People>();
     //searchBy methods: gets a search element (i.e. firstName) as a parameter, and returns the corresponding object
-    //Or ArrayList of objects; Returns null if not found    
+    //Or List of objects; Returns null if not found    
     public People searchByLibraryNumber(int ID) { 
         int checkID;
         for (int i=0; i<people.size();i++){
@@ -15,8 +16,8 @@ public class PersonAccess {
         return null; 
     }
 
-    public ArrayList<People> searchByFirstName(String firstName) {
-        ArrayList<People> allNames = new ArrayList<>();
+    public List<People> searchByFirstName(String firstName) {
+        List<People> allNames = new ArrayList<>();
         String checkName = "";
         for (int i=0; i<allNames.size();i++){
             checkName = people.get(i).getFirstName();
@@ -30,8 +31,8 @@ public class PersonAccess {
         return allNames;
     }
 
-    public ArrayList<People> searchByLastName(String lastName) {
-        ArrayList<People> allNames = new ArrayList<>();
+    public List<People> searchByLastName(String lastName) {
+        List<People> allNames = new ArrayList<>();
         String checkName = "";
         for (int i=0; i<allNames.size();i++){
             checkName = people.get(i).getLastName();
@@ -45,8 +46,8 @@ public class PersonAccess {
         return allNames;
     }
 
-    public ArrayList<People> searchByPhoneNumber(String phoneNumber) {
-        ArrayList<People> allNumbers = new ArrayList<>();
+    public List<People> searchByPhoneNumber(String phoneNumber) {
+        List<People> allNumbers = new ArrayList<>();
         String checkNumber = "";
         for (int i=0; i<allNumbers.size();i++){
             checkNumber = people.get(i).getPhoneNumber();
@@ -60,14 +61,14 @@ public class PersonAccess {
         return allNumbers;
     }
     
-    public void addItem(People peopleObj){//adds a People object to the ArrayList of People
+    public void addItem(People peopleObj){//adds a People object to the List of People
         people.add(peopleObj);
     }
 
     public void editItem(People peopleObj) {}//Empty because the book should automatically update as it is now, 
     //but it will be needed with the database
 
-    public void removeItem(People peopleObj) {//removes a People object from the ArrayList of People
+    public void removeItem(People peopleObj) {//removes a People object from the List of People
         people.remove(peopleObj);
     }
 

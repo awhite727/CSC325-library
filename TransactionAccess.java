@@ -1,8 +1,9 @@
 //MD: 11.9.23
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionAccess {
-    ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    List<Transaction> transactions = new ArrayList<Transaction>();
 
     //searchBy unneeded?
     public void addItem(Transaction transaction) {//adds a Transaction object to the ArrayList of Transactions 
