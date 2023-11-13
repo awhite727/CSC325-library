@@ -1,3 +1,5 @@
+
+
 public class People {
 
     private int libraryNumber;
@@ -42,8 +44,8 @@ public class People {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public void setFeesDue(double feesDue) {
-        this.feesDue = feesDue;
+    public void updateFeesDue(double feesDue) {
+        this.feesDue += feesDue;
     }
 
 } 
