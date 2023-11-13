@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Calendar;
@@ -72,4 +73,31 @@ public class EntityManager {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
 		return formatter.format(date);
 	}
+	// formats a double in 0.00 form.
+	public String formatFees (double fees) {
+		DecimalFormat formatter = new DecimalFormat("0.00");
+		return formatter.format(fees);
+	}
+	// logic for checking out a book
+	public Transaction checkOut(String ISBN, String libraryNumber) {
+		Book book = BookAccess.searchByISBN();
+		People people = PersonAccess.searchByLibraryNumber();
+		if (book == null) {
+			System.out.println("Invalid ISBN.");
+			return null;
+		}
+		else if (people == null) {
+			System.out.println("Invalid MemberID.");
+			return null;
+		}
+		else if (book.getAvailableCopies()==0) {
+			System.out.println("This book has no available copies at this time.");
+			return null;
+		}
+		else {
+			book.setAvailableCopies(book.getAvailableCopies()-1);
+			Transaction transaction = createTransaction(ISBN, libraryNumber);
+			return transaction;
+		}
+	
 }
