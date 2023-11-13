@@ -12,7 +12,6 @@ public class Graphics extends JFrame {
     private CardLayout cardLayout;
     BookAccess bookAccess = BookAccess.getInstance();
     PersonAccess personAccess = PersonAccess.getInstance();
-    TransactionAccess transactionAccess = TransactionAccess.getInstance();
     EntityManager entityManager = new EntityManager();
     
 
@@ -954,13 +953,11 @@ public class Graphics extends JFrame {
         
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4,1,3,1));
-    
-        //MARIA DODSON: CHECK BECAUSE IDK WHAT I'M DOING WITH GUIS :')
-        //TO DO: take user data
-        double fees = entityManager.calculateFees(transactionAccess.searchByISBN("12345"));
+
         JLabel L0,L1;
         L0 = new JLabel("Book Returned!",JLabel.CENTER);
-        L1 = new JLabel("Late Fees due = $"+fees,JLabel.CENTER);
+        L1 = new JLabel("Late Fees due = $",JLabel.CENTER);
+
 
 
         JButton backButton = new JButton("Back to Initial");
