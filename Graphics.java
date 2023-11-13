@@ -684,7 +684,7 @@ public class Graphics extends JFrame {
         JLabel L1 = new JLabel("First Name: ");
         JLabel L2 = new JLabel("Last Name: ", JLabel.RIGHT);
         JLabel L3 = new JLabel("Phone Number: ");
-        L3.setBorder(new EmptyBorder(0, 0, 40, 0));
+        //L3.setBorder(new EmptyBorder(0, 0, 40, 0));
     
         JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
