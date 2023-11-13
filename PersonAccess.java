@@ -25,11 +25,11 @@ public class PersonAccess {
         return people;
     }
 
-    public People searchByLibraryNumber(int ID) { 
+    public People searchByLibraryNumber(String ID) { 
         int checkID;
         for (int i=0; i<people.size();i++){
             checkID = people.get(i).getLibraryNumber();
-            if (ID == checkID){
+            if (Integer.parseInt(ID) == checkID){
                 return people.get(i);
             }
         }

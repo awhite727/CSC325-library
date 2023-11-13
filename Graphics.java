@@ -62,8 +62,8 @@ public class Graphics extends JFrame {
         JPanel screen8 = createScreen8(); //update member: enter ID
         cardPanel.add(screen8, "Screen8");
 
-        JPanel screen9 = createScreen9(); // update member info
-        cardPanel.add(screen9, "Screen9");
+        //JPanel screen9 = createScreen9(); // update member info
+        //cardPanel.add(screen9, "Screen9");
 
         JPanel screen10 = createScreen10();  // view book
         cardPanel.add(screen10, "Screen10");
@@ -661,6 +661,9 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String ID = textField1.getText();
+                JPanel screen9 = createScreen9(ID);
+                cardPanel.add(screen9, "Screen9");
                 cardLayout.show(cardPanel, "Screen9");
             }
         });
@@ -670,7 +673,7 @@ public class Graphics extends JFrame {
     }
 
 
-    private JPanel createScreen9() {
+    private JPanel createScreen9(String ID) {
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -678,17 +681,19 @@ public class Graphics extends JFrame {
         
         JLabel L0 = new JLabel("Type in the boxes whose category you would like to update: ");
         L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
-        JLabel L1 = new JLabel("Name: ", JLabel.RIGHT);
-        JLabel L2 = new JLabel("Phone Number: ");
-
-        L2.setBorder(new EmptyBorder(0, 0, 40, 0));
+        JLabel L1 = new JLabel("First Name: ");
+        JLabel L2 = new JLabel("Last Name: ", JLabel.RIGHT);
+        JLabel L3 = new JLabel("Phone Number: ");
+        L3.setBorder(new EmptyBorder(0, 0, 40, 0));
     
         JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
+        JTextField textField3 = new JTextField(10);
 
 
         textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
         textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+        textField3.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
     
         JButton backButton = new JButton("Back to Initial");
         JButton confirmButton = new JButton("Confirm");
@@ -699,12 +704,14 @@ public class Graphics extends JFrame {
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
         vGroup.addComponent(L0)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                        
                         .addComponent(L1)
                         .addComponent(textField1))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(L2)
                         .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(L3)
+                        .addComponent(textField3))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backButton)
                         .addComponent(confirmButton));
@@ -714,10 +721,12 @@ public class Graphics extends JFrame {
                         .addComponent(L0)
                         .addComponent(L1)
                         .addComponent(L2)
+                        .addComponent(L3)
                         .addComponent(backButton))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textField1)
                         .addComponent(textField2)
+                        .addComponent(textField3)
                         .addComponent(confirmButton));
     
         layout.setVerticalGroup(vGroup);
@@ -733,7 +742,19 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Handle confirm button action here
-                cardLayout.show(cardPanel, "initial");
+                if (textField1.getText().equals("")== false){
+                    (personAccess.searchByLibraryNumber(ID)).setFirstName(textField1.getText());
+                }
+                if (textField2.getText().equals("")== false){
+                    (personAccess.searchByLibraryNumber(ID)).setLastName(textField2.getText());
+                }
+                if (textField3.getText().equals("")== false){
+                    (personAccess.searchByLibraryNumber(ID)).setPhoneNumber(textField3.getText()); 
+                }
+              
+    
+                JPanel screen11 = createScreen11();
+                cardPanel.add(screen11, "Screen11");
             }
         });
     
