@@ -7,9 +7,10 @@ public class TransactionAccess {
     private static TransactionAccess transactionAccess;
     TransactionAccess(){
         String ISBN = "12345";
-        int libraryNumber = 123;
-        Calendar dueDate = 
-        transactions.add(new Transaction("12345", 123, null));
+        String libraryNumber = "123";
+        EntityManager entityManager = new EntityManager();
+        entityManager.createTransaction(ISBN,libraryNumber);
+        transactions.add(entityManager.createTransaction(ISBN,libraryNumber));
     }
     public static TransactionAccess getInstance(){
         if(transactionAccess == null){
