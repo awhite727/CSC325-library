@@ -1,9 +1,30 @@
 //MD: 11.9.23
+import java.util.List;
 import java.util.ArrayList;
 public class PersonAccess {
-    private ArrayList<People> people = new ArrayList<People>();
+    private List<People> people = new ArrayList<People>();
+    private static PersonAccess personAccess = null;
     //searchBy methods: gets a search element (i.e. firstName) as a parameter, and returns the corresponding object
     //Or ArrayList of objects; Returns null if not found    
+    PersonAccess(){
+        people.add(new People(1,"Billy", "Bob", "12345678"));
+    }
+
+
+    public static PersonAccess getInstance(){
+        if(personAccess == null){
+        personAccess = new PersonAccess();
+        }
+        return personAccess;
+    }
+
+    public List<People> getPeople(){
+        for(int i=0;i<people.size();i++){
+            System.out.println(i + ": " + people.get(i).getLibraryNumber());
+        }
+        return people;
+    }
+
     public People searchByLibraryNumber(int ID) { 
         int checkID;
         for (int i=0; i<people.size();i++){

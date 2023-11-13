@@ -11,6 +11,7 @@ public class Graphics extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
     BookAccess bookAccess = BookAccess.getInstance();
+    PersonAccess personAccess = PersonAccess.getInstance();
     EntityManager entityManager = new EntityManager();
     
 
@@ -68,9 +69,9 @@ public class Graphics extends JFrame {
         cardPanel.add(screen10, "Screen10");
 
 
-    // Screen 11 displays the book info
-        //JPanel screen11 = createScreen11();  // view members
-        //cardPanel.add(screen11, "Screen11");
+    // Screen 11 displays the member info
+        JPanel screen11 = createScreen11();  // view members
+        cardPanel.add(screen11, "Screen11");
 
 
     // Screens 12 - 14 are associated with Borrowing and Returning books
@@ -245,10 +246,10 @@ public class Graphics extends JFrame {
                 String Quantity = textField5.getText();
 
                 // Handle confirm button action here
-                                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
-                                JPanel screen10 = createScreen10();  // view book
-                                cardPanel.add(screen10, "Screen10");
-                                cardLayout.show(cardPanel, "initial");
+                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
+                JPanel screen10 = createScreen10();  // view book
+                cardPanel.add(screen10, "Screen10");
+                cardLayout.show(cardPanel, "initial");
             }
         });
     
@@ -508,9 +509,9 @@ public class Graphics extends JFrame {
                     if (buttonText.equals("Initial Screen")){       
                         cardLayout.show(cardPanel, "initial"); 
                     }
-                    //if (buttonText.equals("View Members")){       
-                     //   cardLayout.show(cardPanel, "Screen10"); 
-                    //}
+                    if (buttonText.equals("View Members")){       
+                        cardLayout.show(cardPanel, "Screen11"); 
+                    }
                 }
             });
             panel.add(button);
@@ -527,23 +528,24 @@ public class Graphics extends JFrame {
         
         JLabel L0 = new JLabel(" Please fill in information regarding the new Library Member:");
         L0.setBorder(new EmptyBorder(20, 0, 40, 0)); // Add vertical space around L0
-        JLabel L1 = new JLabel("Name: ", JLabel.RIGHT);
-        JLabel L2 = new JLabel("Phone Number: ");
-
-        L2.setBorder(new EmptyBorder(0, 0, 40, 0));
+        JLabel L1 = new JLabel("Member ID: ", JLabel.RIGHT);
+        JLabel L2 = new JLabel("First Name: ");
+        JLabel L3 = new JLabel("Last Name: ");
+        JLabel L4 = new JLabel("Phone Number: ");
+        L4.setBorder(new EmptyBorder(0, 0, 40, 0));
     
         JTextField textField1 = new JTextField(10);
         JTextField textField2 = new JTextField(10);
-
+        JTextField textField3 = new JTextField(10);
+        JTextField textField4 = new JTextField(10);
 
         textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
         textField2.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
+        textField3.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        textField4.setMaximumSize(new Dimension(250, textField2.getPreferredSize().height));
     
         JButton backButton = new JButton("Back to Initial");
         JButton confirmButton = new JButton("Confirm");
-    
-        //layout.setAutoCreateGaps(true);
-        //layout.setAutoCreateContainerGaps(true);
     
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
         vGroup.addComponent(L0)
@@ -554,6 +556,12 @@ public class Graphics extends JFrame {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(L2)
                         .addComponent(textField2))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L3)
+                        .addComponent(textField3))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(L4)
+                        .addComponent(textField4))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(backButton)
                         .addComponent(confirmButton));
@@ -563,10 +571,14 @@ public class Graphics extends JFrame {
                         .addComponent(L0)
                         .addComponent(L1)
                         .addComponent(L2)
+                        .addComponent(L3)
+                        .addComponent(L4)
                         .addComponent(backButton))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textField1)
                         .addComponent(textField2)
+                        .addComponent(textField3)
+                        .addComponent(textField4)
                         .addComponent(confirmButton));
     
         layout.setVerticalGroup(vGroup);
@@ -581,6 +593,16 @@ public class Graphics extends JFrame {
     
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String ID = textField1.getText();
+                String firstName = textField2.getText();
+                String lastName = textField3.getText();
+                String phoneNumber = textField4.getText();
+
+                // Handle confirm button action here
+                personAccess.addItem(entityManager.createPeople(ID, firstName, lastName, phoneNumber));
+                JPanel screen11 = createScreen11();  // view book
+                cardPanel.add(screen11, "Screen11");
+                
                 // Handle confirm button action here
                 cardLayout.show(cardPanel, "initial");
             }
@@ -771,7 +793,57 @@ public class Graphics extends JFrame {
         return panel;
     }
 
+    private JPanel createScreen11() {
+        System.out.println("In createScreen11");
+        JPanel panel = new JPanel();
+        List<People> peoples = personAccess.getPeople();
+        Object[][] data = new Object[peoples.size()][];
+        for (int i = 0; i < peoples.size(); i++) {
+            People people = peoples.get(i);
+            data[i] = new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), people.getFeesDue()};
+        }
+        // String array for column names
+        String[] columns = new String[]{"Library ID","First Name","Last Name","Phone Number","Fees Due"};
+        // 2D array for table data
 
+        // Class array for column classes
+        final Class[] columnClass = new Class[]{int.class, String.class, String.class,String.class, String.class};
+
+        // Create table model with data
+        DefaultTableModel model = new DefaultTableModel(data, columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnClass[columnIndex];
+            }
+        };
+
+        // Create JTable with the model
+        JTable table = new JTable(model);
+        table.setShowGrid(true);
+        table.setShowHorizontalLines(true);
+        table.setShowVerticalLines(true);
+        // Set up the panel layout
+        panel.setLayout(new BorderLayout());
+
+        // Add the table to the panel with a JScrollPane
+        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+        JButton backButton = new JButton("Back to Initial");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+
+        panel.add(backButton, BorderLayout.NORTH);
+
+        return panel;
+    }
 
 
 
