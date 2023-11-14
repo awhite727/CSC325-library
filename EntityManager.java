@@ -10,9 +10,13 @@ public class EntityManager {
         // converts copies into an integer, and passes parameters into Book
 		try{
 			int copyInt = Integer.parseInt(copies);
-			Book book = new Book(title, author, ISBN, genre, copyInt);
-			return book;
-			
+			if (BookAccess.searchByISBN == null) {
+				Book book = new Book(title, author, ISBN, genre, copyInt);
+				return book;
+			}
+			else {
+				System.out.println(ISBN + " already belongs to an existing book");
+			}
 		} catch(IllegalArgumentException e){
 			System.out.println(copies + " is not an integer");
 			e.printStackTrace();
@@ -24,8 +28,14 @@ public class EntityManager {
         // passes parameters into People
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
-			People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
-			return people;
+			if (PersonAccess.searchByLibraryNumber(libraryNumber) == null) {
+				People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
+				return people;
+			}
+			else {
+				System.out.println(libraryNumber + " already belongs to an existing user.");
+				return null;
+			}
 			
 		} catch(IllegalArgumentException e){
 			System.out.println(libraryNumber + " is not an integer");
@@ -80,8 +90,8 @@ public class EntityManager {
 	}
 	// logic for checking out a book
 	public Transaction checkOut(String ISBN, String libraryNumber) {
-		Book book = BookAccess.searchByISBN();
-		People people = PersonAccess.searchByLibraryNumber();
+		Book book = BookAccess.searchByISBN(ISBN);
+		People people = PersonAccess.searchByLibraryNumber(libraryNumber);
 		if (book == null) {
 			System.out.println("Invalid ISBN.");
 			return null;
@@ -99,5 +109,9 @@ public class EntityManager {
 			Transaction transaction = createTransaction(ISBN, libraryNumber);
 			return transaction;
 		}
-	
+	}
+	public void returnBook(String ISBN, String libraryNumber) {
+		// AW 11/14 how to handle the same book checked out by different people
+		// 		or the same person with multiple books checked out?
+	}
 }
