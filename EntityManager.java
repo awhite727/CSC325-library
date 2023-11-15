@@ -51,8 +51,9 @@ public class EntityManager {
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
 			// gets the current date
+			Date currDate = new Date()
 			Calendar dueDate = Calendar.getInstance();
-			Date dueDate = new Date();
+			dueDate.setTime(currDate);
         	//adds 21 days to the current date
 			dueDate.add(Calendar.DATE, 21);
         	// passes parameters into Transaction		
