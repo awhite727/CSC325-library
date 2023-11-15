@@ -51,9 +51,8 @@ public class EntityManager {
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
 			// gets the current date
-			SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
 			Calendar dueDate = Calendar.getInstance();
-			dueDate.setTime(new Date());
+			Date dueDate = new Date();
         	//adds 21 days to the current date
 			dueDate.add(Calendar.DATE, 21);
         	// passes parameters into Transaction		
@@ -111,8 +110,19 @@ public class EntityManager {
 			return transaction;
 		}
 	}
-	public void returnBook(String ISBN, String libraryNumber) {
+	public void returnBook(Transaction transaction) {
 		// AW 11/14 how to handle the same book checked out by different people
 		// 		or the same person with multiple books checked out?
+		if (TransactionAccess.searchByLibraryNumber(transaction.getLibraryNumber.toString())!=TransactionAccess.searchByISBN(transaction.getISBN())) {
+			System.out.println("This book has not been checked out!");
+		}
+		else {
+			double fees = calculateFees(transaction);
+			Person user = PersonAccess.searchByLibraryNumber(transaction.getLibraryNumber().toString());
+			Book book = BookAccess.searchByISBN(transaction.getISBN());
+			user.updateFeesDue(fees);
+			book.setAvailableCopies(book.getAvailableCopies()+1);
+
+		}
 	}
 }
