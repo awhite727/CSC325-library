@@ -123,7 +123,7 @@ public class EntityManager {
 			Book book = BookAccess.searchByISBN(transaction.getISBN());
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
-
+			TransactionAccess.removeItem(transaction);
 		}
 	}
 }
