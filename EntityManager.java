@@ -51,11 +51,13 @@ public class EntityManager {
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
 			// gets the current date
-			Date currDate = new Date();
-			Calendar dueDate = Calendar.getInstance();
-			dueDate.setTime(currDate);
+			//Date currDate = new Date();
+			Calendar dueDateTemp = Calendar.getInstance();
+			dueDateTemp.setTime(new Date());
+			dueDateTemp.add(Calendar.DATE,21);
+			Date dueDate = dueDateTemp.getTime();
         	//adds 21 days to the current date
-			dueDate.add(Calendar.DATE, 21);
+			//dueDate.add(Calendar.DATE, 21);
         	// passes parameters into Transaction		
 			Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
 			return transaction;
@@ -68,8 +70,8 @@ public class EntityManager {
 	// calculates fees due for a transaction
 	public double calculateFees (Transaction transaction) {
 		// gets dates
-		Calendar dueDate = transaction.getDueDate();
-		Calendar currDate = Calendar.getInstance();
+		Date dueDate = transaction.getDueDate();
+		Date currDate = new Date();
 		double fees = 0.0;
 		if (dueDate.before(currDate)) {		// checks that the book is late
 			// gets days between due date and current date
@@ -80,10 +82,9 @@ public class EntityManager {
 		return fees;
 	}
 	// converts a Calendar object to a String in the format of MM/dd/yyyy
-	public String formatDate (Calendar date) {
+	public String formatDate (Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
-		System.out.println(formatter.format(date));
-		return "";
+		return formatter.format(new Date());
 	}
 	// formats a double in 0.00 form.
 	public String formatFees (double fees) {

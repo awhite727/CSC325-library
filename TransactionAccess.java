@@ -1,6 +1,5 @@
 //MD: 11.9.23
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();

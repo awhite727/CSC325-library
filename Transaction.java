@@ -1,12 +1,12 @@
-import java.util.Calendar;
+import java.util.Date;
 
 public class Transaction {
 
     private String ISBN;
     private int libraryNumber;
-    private Calendar dueDate;
+    private Date dueDate;
     //constructor
-    public Transaction(String ISBN, int libraryNumber, Calendar dueDate) {
+    public Transaction(String ISBN, int libraryNumber, Date dueDate) {
         this.ISBN = ISBN;
         this.libraryNumber = libraryNumber;
         this.dueDate = dueDate;         // Calculate this in the constructor, or some other class?
@@ -18,7 +18,7 @@ public class Transaction {
     public int getLibraryNumber() {
         return libraryNumber;
     }
-    public Calendar getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
     //setters for the attributes
@@ -28,7 +28,7 @@ public class Transaction {
     public void setLibraryNumber(int libraryNumber) {
         this.libraryNumber = libraryNumber;
     }
-    public void setDueDate(Calendar dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
