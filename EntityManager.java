@@ -114,16 +114,16 @@ public class EntityManager {
 	public void returnBook(Transaction transaction) {
 		// AW 11/14 how to handle the same book checked out by different people
 		// 		or the same person with multiple books checked out?
-		if (TransactionAccess.searchByLibraryNumber(transaction.getLibraryNumber.toString())!=TransactionAccess.searchByISBN(transaction.getISBN())) {
+		if (TransactionAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber()))!=TransactionAccess.getInstance().searchByISBN(transaction.getISBN())) {
 			System.out.println("This book has not been checked out!");
 		}
 		else {
 			double fees = calculateFees(transaction);
-			Person user = PersonAccess.searchByLibraryNumber(transaction.getLibraryNumber().toString());
-			Book book = BookAccess.searchByISBN(transaction.getISBN());
+			People user = PersonAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber()));
+			Book book = BookAccess.getInstance().searchByISBN(transaction.getISBN());
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
-			TransactionAccess.removeItem(transaction);
+			TransactionAccess.getInstance().removeItem(transaction);
 		}
 	}
 }

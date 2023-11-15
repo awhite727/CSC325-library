@@ -19,6 +19,17 @@ public class TransactionAccess {
         return transactionAccess;
     }
 
+    public Transaction searchByLibraryNumber(String libraryNumber){
+        Transaction transactionHold; 
+        for (int i=0;i<transactions.size();i++){
+            transactionHold = transactions.get(i);
+            if(libraryNumber.strip().equalsIgnoreCase(Integer.toString(transactionHold.getLibraryNumber()))){
+                return transactionHold;
+            }
+        }
+        return null;
+    }
+
     public Transaction searchByISBN(String isbn){
         Transaction transactionHold; 
         for (int i=0;i<transactions.size();i++){
