@@ -940,8 +940,8 @@ public class Graphics extends JFrame {
                 //MARIA DODSON: Please check
                 //TO DO: Take user data
                 Transaction transaction = entityManager.createTransaction("1234","1");
-                String dueDate = entityManager.formatDate(transaction.getDueDate());
                 transactionAccess.addItem(transaction);
+                String dueDate = entityManager.formatDate(transaction.getDueDate());
 
                 JPanel screen14 = createScreen14(dueDate);  //book checked out confirmation
                 cardPanel.add(screen14, "Screen14");

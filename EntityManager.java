@@ -50,14 +50,11 @@ public class EntityManager {
         // converts libraryNumber to an integer
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
-			// gets the current date
-			//Date currDate = new Date();
+			// gets the current date and adds 21
 			Calendar dueDateTemp = Calendar.getInstance();
 			dueDateTemp.setTime(new Date());
 			dueDateTemp.add(Calendar.DATE,21);
 			Date dueDate = dueDateTemp.getTime();
-        	//adds 21 days to the current date
-			//dueDate.add(Calendar.DATE, 21);
         	// passes parameters into Transaction		
 			Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
 			return transaction;
@@ -84,7 +81,7 @@ public class EntityManager {
 	// converts a Calendar object to a String in the format of MM/dd/yyyy
 	public String formatDate (Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
-		return formatter.format(new Date());
+		return formatter.format(date);
 	}
 	// formats a double in 0.00 form.
 	public String formatFees (double fees) {
