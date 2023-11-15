@@ -10,12 +10,13 @@ public class EntityManager {
         // converts copies into an integer, and passes parameters into Book
 		try{
 			int copyInt = Integer.parseInt(copies);
-			if (BookAccess.searchByISBN == null) {
+			if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
 				Book book = new Book(title, author, ISBN, genre, copyInt);
 				return book;
 			}
 			else {
 				System.out.println(ISBN + " already belongs to an existing book");
+				return null;
 			}
 		} catch(IllegalArgumentException e){
 			System.out.println(copies + " is not an integer");
@@ -28,7 +29,7 @@ public class EntityManager {
         // passes parameters into People
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
-			if (PersonAccess.searchByLibraryNumber(libraryNumber) == null) {
+			if (PersonAccess.getInstance().searchByLibraryNumber(libraryNumber) == null) {
 				People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
 				return people;
 			}
@@ -90,8 +91,8 @@ public class EntityManager {
 	}
 	// logic for checking out a book
 	public Transaction checkOut(String ISBN, String libraryNumber) {
-		Book book = BookAccess.searchByISBN(ISBN);
-		People people = PersonAccess.searchByLibraryNumber(libraryNumber);
+		Book book = BookAccess.getInstance().searchByISBN(ISBN);
+		People people = PersonAccess.getInstance().searchByLibraryNumber(libraryNumber);
 		if (book == null) {
 			System.out.println("Invalid ISBN.");
 			return null;
