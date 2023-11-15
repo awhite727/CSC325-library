@@ -78,12 +78,6 @@ public class Graphics extends JFrame {
     // Screens 12 - 14 are associated with Borrowing and Returning books
         JPanel screen12 = createScreen12(); //adding member
         cardPanel.add(screen12, "Screen12");
-
-        JPanel screen13 = createScreen13(); //returning book confirmation
-        cardPanel.add(screen13, "Screen13");
-
-        JPanel screen14 = createScreen14();  //book checked out confirmation
-        cardPanel.add(screen14, "Screen14");
     
         // Add the card panel to the JFrame
         add(cardPanel);
@@ -936,13 +930,21 @@ public class Graphics extends JFrame {
     
         confirmButton1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Handle confirm button action here
+                JPanel screen13 = createScreen13(); //returning book confirmation
+                cardPanel.add(screen13, "Screen13");
                 cardLayout.show(cardPanel, "Screen13");
             }
         });
         confirmButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Handle confirm button action here
+                //MARIA DODSON: Please check
+                //TO DO: Take user data
+                Transaction transaction = entityManager.createTransaction("1234","1");
+                String dueDate = entityManager.formatDate(transaction.getDueDate());
+                transactionAccess.addItem(transaction);
+
+                JPanel screen14 = createScreen14(dueDate);  //book checked out confirmation
+                cardPanel.add(screen14, "Screen14");
                 cardLayout.show(cardPanel, "Screen14");
             }
         });
@@ -957,6 +959,7 @@ public class Graphics extends JFrame {
         //MARIA DODSON: CHECK BECAUSE IDK WHAT I'M DOING WITH GUIS :')
         //TO DO: take user data
         double fees = entityManager.calculateFees(transactionAccess.searchByISBN("12345"));
+        
         
 
         JLabel L0,L1;
@@ -980,14 +983,15 @@ public class Graphics extends JFrame {
         return panel;
     }
 
-    private JPanel createScreen14() {
-        
+    private JPanel createScreen14(String dueDate) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4,1,3,1));
+        panel.setLayout(new GridLayout(6,2,3,1));
 
-        JLabel L0,L1;
+        JLabel L0,L1,L2,L3;
         L0 = new JLabel("Book Has Been Checked Out!",JLabel.CENTER);
-        L1 = new JLabel("Return date: ",JLabel.CENTER);
+        L1 = new JLabel();
+        L2 = new JLabel("Return date: ",JLabel.CENTER);
+        L3 = new JLabel(dueDate);
 
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
@@ -997,6 +1001,9 @@ public class Graphics extends JFrame {
         });
 
         panel.add(L0);
+        panel.add(L1);
+        panel.add(L2);
+        panel.add(L3);
         panel.add(L1);
         panel.add(backButton);
         setVisible(true);

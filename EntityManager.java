@@ -82,7 +82,8 @@ public class EntityManager {
 	// converts a Calendar object to a String in the format of MM/dd/yyyy
 	public String formatDate (Calendar date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");	//month-day-year format
-		return formatter.format(date);
+		System.out.println(formatter.format(date));
+		return "";
 	}
 	// formats a double in 0.00 form.
 	public String formatFees (double fees) {
