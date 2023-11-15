@@ -31,7 +31,7 @@ public class Book {
     public int getTotalCopies() {
         return totalCopies;
     }
-    public int availableCopies() {
+    public int getAvailableCopies() {
         return availableCopies;
     }
     //setters for each attribute
