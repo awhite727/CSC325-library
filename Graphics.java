@@ -928,9 +928,13 @@ public class Graphics extends JFrame {
             }
         });
     
-        confirmButton1.addActionListener(new ActionListener() {
+        confirmButton1.addActionListener(new ActionListener() { //TO DO: FINISH
             public void actionPerformed(ActionEvent e) {
-                JPanel screen13 = createScreen13(); //returning book confirmation
+                String memberID = textField1.getText();
+                String isbn = textField2.getText();
+                //TO DO: Handle if the transaction is not found
+                entityManager.returnBook(TransactionAccess.getInstance().searchByLibraryNumber(memberID));
+                JPanel screen13 = createScreen13(isbn); //returning book confirmation
                 cardPanel.add(screen13, "Screen13");
                 cardLayout.show(cardPanel, "Screen13");
             }
@@ -939,7 +943,9 @@ public class Graphics extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //MARIA DODSON: Please check
                 //TO DO: Take user data
-                Transaction transaction = entityManager.createTransaction("1234","1");
+                String memberID = textField1.getText();
+                String isbn = textField2.getText();
+                Transaction transaction = entityManager.createTransaction(isbn,memberID);
                 transactionAccess.addItem(transaction);
                 String dueDate = entityManager.formatDate(transaction.getDueDate());
 
@@ -952,13 +958,13 @@ public class Graphics extends JFrame {
         return panel;
     }
 
-    private JPanel createScreen13() {
+    private JPanel createScreen13(String isbn) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4,1,3,1));
 
         //MARIA DODSON: CHECK BECAUSE IDK WHAT I'M DOING WITH GUIS :')
         //TO DO: take user data
-        double fees = entityManager.calculateFees(transactionAccess.searchByISBN("12345"));
+        double fees = entityManager.calculateFees(transactionAccess.searchByISBN(isbn));
         
         
 
