@@ -86,7 +86,7 @@ public class EntityManager {
 	// formats a double in 0.00 form.
 	public String formatFees (double fees) {
 		DecimalFormat formatter = new DecimalFormat("0.00");
-		return formatter.format(fees);
+		return "$" + formatter.format(fees);
 	}
 	// logic for checking out a book
 	public Transaction checkOut(String ISBN, String libraryNumber) {

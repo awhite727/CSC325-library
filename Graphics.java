@@ -973,7 +973,7 @@ public class Graphics extends JFrame {
         Object[][] data = new Object[peoples.size()][];
         for (int i = 0; i < peoples.size(); i++) {
             People people = peoples.get(i);
-            data[i] = new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), people.getFeesDue()};
+            data[i] = new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), entityManager.formatFees(people.getFeesDue())};
         }
         // String array for column names
         String[] columns = new String[]{"Library ID","First Name","Last Name","Phone Number","Fees Due"};
