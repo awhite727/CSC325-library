@@ -8,7 +8,10 @@ public class BookAccess {
     private static BookAccess bookAccess = null;
 
     BookAccess(){
-        books.add(new Book("The Great Gatsby", "IDKLOL", "123", "Fantasy", 2));
+        books.add(new Book("The Great Gatsby", "F. Scott Fitzgerald", "123", "Fiction", 2));
+        books.add(new Book("Lord of the Flies", "William Golding", "222", "Allegorical Novel", 3));
+        books.add(new Book("The Hunger Games", "Suzanne Collins", "555", "Dystopian YA", 4));
+        books.add(new Book("Catching Fire", "Suzanne Collins", "687", "Dystopian YA", 4));
     }
 
     public static BookAccess getInstance(){
@@ -83,6 +86,27 @@ public class BookAccess {
             return null;
         }
         return allOfGenre;
+    }
+
+    public ArrayList<Book> searchByTotalCopies(String copies) {
+        try{
+            int totalCopies = Integer.parseInt(copies);
+            ArrayList<Book> allOfCopies = new ArrayList<>();
+            int checkCopies;
+            for (int i=0; i<books.size();i++){
+                checkCopies = books.get(i).getTotalCopies();
+                if (totalCopies == checkCopies){
+                    allOfCopies.add(books.get(i));
+                }
+            }
+            if (allOfCopies.isEmpty()){
+                return null;
+            }
+            return allOfCopies;
+        } catch(IllegalArgumentException e){
+            e.printStackTrace();
+        }
+        return null;
     }
     
     public void addItem(Book book){
