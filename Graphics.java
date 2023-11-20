@@ -24,7 +24,7 @@ public class Graphics extends JFrame {
             e.printStackTrace();
         }
         // Set up the JFrame
-        setTitle("Multi-Screen Navigation GUI");
+        setTitle("Library Management System");
         setSize(900, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -36,6 +36,8 @@ public class Graphics extends JFrame {
         JPanel initialScreen = createPanel_Initial("Initial Screen", "Book Management", "Member Management", "Book Search", "Borrow/Return");
         cardPanel.add(initialScreen, "initial");
 
+        JPanel confirm = createConfirmScreen();   //confirm screen
+        cardPanel.add(confirm, "Confirm");
     // Screens 1 - 5 are associated with Book Management 
         JPanel screen1 = createPanel_1("Screen 1", "Add Book", "Update Book", "Remove Book", "Initial Screen");
         cardPanel.add(screen1, "Screen1");
@@ -54,7 +56,7 @@ public class Graphics extends JFrame {
         cardPanel.add(screen5, "Screen5");
 
     // Screens 6 - 10 are associated with Member Management
-        JPanel screen6 = createPanel_6("Screen 6", "Add Member", "Update Member Info", "View Members", "Initial Screen");
+        JPanel screen6 = createPanel_6("Screen 6", "Add Member", "Update Member Info", "Delete Member","View Members", "Initial Screen");
         cardPanel.add(screen6, "Screen6");
 
         JPanel screen7 = createScreen7(); //adding member
@@ -66,6 +68,9 @@ public class Graphics extends JFrame {
         //JPanel screen9 = createScreen9(); // update member info
         //cardPanel.add(screen9, "Screen9");
 
+        JPanel deleteUser = createDeleteUser(); //update member: enter ID
+        cardPanel.add(deleteUser, "DeleteUser");
+
         JPanel screen10 = createScreen10();  // view book
         cardPanel.add(screen10, "Screen10");
 
@@ -76,7 +81,7 @@ public class Graphics extends JFrame {
 
 
     // Screens 12 - 14 are associated with Borrowing and Returning books
-        JPanel screen12 = createScreen12(); //adding member
+        JPanel screen12 = createScreen12();
         cardPanel.add(screen12, "Screen12");
     
         // Add the card panel to the JFrame
@@ -117,6 +122,60 @@ public class Graphics extends JFrame {
         }
     
         
+        return panel;
+    }
+    private JPanel createConfirmScreen() {
+        JPanel panel = new JPanel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        
+        JLabel L0 = new JLabel(" The Database has been updated!");
+        
+    
+        JButton backButton = new JButton("Back to Initial");
+    
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(backButton));
+                        
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(L0)
+                        .addComponent(backButton));
+                
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+        
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //recreates all screens with textboxes so they return to null
+                JPanel screen2 = createScreen2();  
+                cardPanel.add(screen2, "Screen2");
+                JPanel screen3 = createScreen3();   
+                cardPanel.add(screen3, "Screen3");
+                JPanel screen4 = createScreen4("123");
+                cardPanel.add(screen4, "Screen4");
+                JPanel screen5 = createScreen5();   
+                cardPanel.add(screen5, "Screen5");
+                JPanel screen7 = createScreen7(); 
+                cardPanel.add(screen7, "Screen7");
+                JPanel screen8 = createScreen8(); 
+                cardPanel.add(screen8, "Screen8");
+                JPanel screen9 = createScreen9("123"); 
+                cardPanel.add(screen9, "Screen9");
+                JPanel screen12 = createScreen12();
+                cardPanel.add(screen12, "Screen12");
+
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+    
+    
         return panel;
     }
     private JPanel createPanel_1(String panelName, String... buttonTexts) {
@@ -244,7 +303,7 @@ public class Graphics extends JFrame {
                 bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
                 JPanel screen10 = createScreen10();  // view book
                 cardPanel.add(screen10, "Screen10");
-                cardLayout.show(cardPanel, "initial");
+                cardLayout.show(cardPanel, "Confirm");
             }
         });
     
@@ -414,6 +473,7 @@ public class Graphics extends JFrame {
   
             JPanel screen10 = createScreen10();
             cardPanel.add(screen10, "Screen10");
+            cardLayout.show(cardPanel, "Confirm");
             }
         });
     
@@ -477,7 +537,7 @@ public class Graphics extends JFrame {
                 JPanel screen10 = createScreen10();
                 cardPanel.add(screen10, "Screen10");
                 
-                cardLayout.show(cardPanel, "initial");
+                cardLayout.show(cardPanel, "Confirm");
             }
         });
 
@@ -506,6 +566,9 @@ public class Graphics extends JFrame {
                     }
                     if (buttonText.equals("View Members")){       
                         cardLayout.show(cardPanel, "Screen11"); 
+                    }
+                    if (buttonText.equals("Delete Member")){       
+                        cardLayout.show(cardPanel, "DeleteUser"); 
                     }
                 }
             });
@@ -599,7 +662,7 @@ public class Graphics extends JFrame {
                 cardPanel.add(screen11, "Screen11");
                 
                 // Handle confirm button action here
-                cardLayout.show(cardPanel, "initial");
+                cardLayout.show(cardPanel, "Confirm");
             }
         });
     
@@ -750,12 +813,74 @@ public class Graphics extends JFrame {
     
                 JPanel screen11 = createScreen11();
                 cardPanel.add(screen11, "Screen11");
+                cardLayout.show(cardPanel, "Confirm");
             }
         });
     
         return panel;
     }
+    private JPanel createDeleteUser() {
+        JPanel panel = new JPanel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+
+        JLabel L0,L1;
+        L0 = new JLabel("Please enter the ID of the member you would like to remove.",JLabel.CENTER);
+        L0.setBorder(new EmptyBorder(20, 0, 40, 0));
+        L1 = new JLabel("Member ID: ");
+        L1.setBorder(new EmptyBorder(0, 0, 40, 0));
+        
+        JTextField textField1= new JTextField(10);
+        textField1.setMaximumSize(new Dimension(250, textField1.getPreferredSize().height));
+        
+
+        JButton backButton = new JButton("Back to Initial");
+        JButton confirmButton = new JButton("Confirm");
+        
+
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        
+                        .addComponent(L1)
+                        .addComponent(textField1))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(backButton)
+                        .addComponent(confirmButton));
     
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(backButton))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(textField1)
+                        .addComponent(confirmButton));
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+
+
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(cardPanel, "initial");
+            }
+        });
+
+        confirmButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String ID = textField1.getText();
+                personAccess.removeItem(personAccess.searchByLibraryNumber(ID));
+                JPanel screen11 = createScreen11();
+                cardPanel.add(screen11, "Screen11");
+                
+                cardLayout.show(cardPanel, "Confirm");
+            }
+        });
+
+        return panel;
+
+    }
     
     private JPanel createScreen10() {
         System.out.println("In createScreen10");
@@ -766,47 +891,84 @@ public class Graphics extends JFrame {
             Book book = copyOfBooks.get(i);
             data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()};
         }
+    
         // String array for column names
-        String[] columns = new String[]{"ISBN","Title","Author","Genre","Total Copies"};
-        // 2D array for table data
-
+        String[] columns = new String[]{"ISBN", "Title", "Author", "Genre", "Total Copies"};
+    
         // Class array for column classes
-        final Class[] columnClass = new Class[]{String.class, String.class, String.class,String.class, String.class};
-
+        final Class[] columnClass = new Class[]{String.class, String.class, String.class, String.class, String.class};
+    
         // Create table model with data
         DefaultTableModel model = new DefaultTableModel(data, columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-
+    
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnClass[columnIndex];
             }
         };
-
+    
         // Create JTable with the model
         JTable table = new JTable(model);
         table.setShowGrid(true);
         table.setShowHorizontalLines(true);
         table.setShowVerticalLines(true);
+    
         // Set up the panel layout
         panel.setLayout(new BorderLayout());
-
+    
+        // Adds a search bar
+        JTextField searchField = new JTextField(20); // changes width of search bar
+        JButton searchButton = new JButton("Search"); // search button
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        searchPanel.add(new JLabel("Search: "));
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+    
+        // Adds a listener for the search button
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText().toLowerCase();
+                filterTableData(model, copyOfBooks, searchText);
+            }
+        });
+    
+        panel.add(searchPanel, BorderLayout.NORTH);
+    
         // Add the table to the panel with a JScrollPane
         panel.add(new JScrollPane(table), BorderLayout.CENTER);
-
+    
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        panel.add(backButton, BorderLayout.NORTH);
-
+    
+        panel.add(backButton, BorderLayout.SOUTH);
+    
         return panel;
+    }
+    
+    private void filterTableData(DefaultTableModel model, List<Book> copyOfBooks, String searchText) {
+        model.setRowCount(0); // clears the existing rows
+    
+        for (Book book : copyOfBooks) {
+            if (bookMatchesSearch(book, searchText)) {
+                model.addRow(new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()});
+            }
+        }
+    }
+    
+    private boolean bookMatchesSearch(Book book, String searchText) {
+        return book.getISBN().toLowerCase().contains(searchText) ||
+               book.getTitle().toLowerCase().contains(searchText) ||
+               book.getAuthor().toLowerCase().contains(searchText) ||
+               book.getGenre().toLowerCase().contains(searchText);
     }
 
     private JPanel createScreen11() {
