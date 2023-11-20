@@ -7,7 +7,12 @@ public class PersonAccess {
     //searchBy methods: gets a search element (i.e. firstName) as a parameter, and returns the corresponding object
     //Or ArrayList of objects; Returns null if not found    
     PersonAccess(){
-        people.add(new People(1,"Billy", "Bob", "12345678"));
+        people.add(new People(1,"Billy", "Bob", "1234567"));
+        people.add(new People(2,"Sally", "Jackson", "2225555"));
+        people.add(new People(3,"John", "Doe", "9995555"));
+        people.add(new People(4,"Jane", "Doe", "9257234"));
+        people.get(3).updateFeesDue(4);
+
     }
 
 
