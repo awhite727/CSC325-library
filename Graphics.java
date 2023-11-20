@@ -91,8 +91,8 @@ public class Graphics extends JFrame {
         setVisible(true);
     }
 
-    private JPanel createPanel_Initial(String panelName, String... buttonTexts) {
-        JPanel panel = new JPanel();
+    private JPanel createPanel_Initial(String panelName, String... buttonTexts) { //start-up screen
+        JPanel panel = new JPanel(); 
         panel.setLayout(new GridLayout(5,15,3,1));
         JLabel L0;
 
@@ -124,17 +124,14 @@ public class Graphics extends JFrame {
         
         return panel;
     }
-    private JPanel createConfirmScreen() {
+    private JPanel createConfirmScreen() { //this screen is called to tell the user the database is updated and recreates screens with textboxes
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
     
-        
         JLabel L0 = new JLabel(" The Database has been updated!");
         
-    
         JButton backButton = new JButton("Back to Initial");
-    
     
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
         vGroup.addComponent(L0)
@@ -146,11 +143,9 @@ public class Graphics extends JFrame {
                         .addComponent(L0)
                         .addComponent(backButton));
                 
-    
         layout.setVerticalGroup(vGroup);
         layout.setHorizontalGroup(hGroup);
 
-        
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //recreates all screens with textboxes so they return to null
@@ -158,7 +153,7 @@ public class Graphics extends JFrame {
                 cardPanel.add(screen2, "Screen2");
                 JPanel screen3 = createScreen3();   
                 cardPanel.add(screen3, "Screen3");
-                JPanel screen4 = createScreen4("123");
+                JPanel screen4 = createScreen4("123"); //"123" is just a random value
                 cardPanel.add(screen4, "Screen4");
                 JPanel screen5 = createScreen5();   
                 cardPanel.add(screen5, "Screen5");
@@ -166,19 +161,19 @@ public class Graphics extends JFrame {
                 cardPanel.add(screen7, "Screen7");
                 JPanel screen8 = createScreen8(); 
                 cardPanel.add(screen8, "Screen8");
-                JPanel screen9 = createScreen9("123"); 
+                JPanel screen9 = createScreen9("123"); //"123" is just a random value
                 cardPanel.add(screen9, "Screen9");
                 JPanel screen12 = createScreen12();
                 cardPanel.add(screen12, "Screen12");
 
-                cardLayout.show(cardPanel, "initial");
+                cardLayout.show(cardPanel, "initial"); //takes user back to start-up screen
             }
         });
     
     
         return panel;
     }
-    private JPanel createPanel_1(String panelName, String... buttonTexts) {
+    private JPanel createPanel_1(String panelName, String... buttonTexts) { //gives user options for book managemnt
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5,2,3,1));
 
@@ -208,7 +203,7 @@ public class Graphics extends JFrame {
 
 
 
-    private JPanel createScreen2() {
+    private JPanel createScreen2() { //add book screen
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -313,7 +308,7 @@ public class Graphics extends JFrame {
     
     
 
-    private JPanel createScreen3() {
+    private JPanel createScreen3() { //screen for updating book part 1:Enter ISBN
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -374,7 +369,7 @@ public class Graphics extends JFrame {
 
     }
 
-    private JPanel createScreen4(String ISBN) {
+    private JPanel createScreen4(String ISBN) { //screen for updating book part 2: entering updated info
         
 
         JPanel panel = new JPanel();
@@ -1171,8 +1166,5 @@ public class Graphics extends JFrame {
         panel.add(backButton);
         setVisible(true);
         return panel;
-    }
-
-
-    
+    } 
 }
