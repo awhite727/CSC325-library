@@ -932,7 +932,7 @@ public class Graphics extends JFrame {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText().toLowerCase();
+                String searchText = searchField.getText().toLowerCase().strip();
                 filterTableData(model, copyOfBooks, searchText);
             }
         });
@@ -1103,8 +1103,6 @@ public class Graphics extends JFrame {
         });
         confirmButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //MARIA DODSON: Please check
-                //TO DO: Take user data
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
                 Transaction transaction = entityManager.createTransaction(isbn,memberID);
@@ -1123,9 +1121,6 @@ public class Graphics extends JFrame {
     private JPanel createScreen13(String isbn) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4,1,3,1));
-
-        //MARIA DODSON: CHECK BECAUSE IDK WHAT I'M DOING WITH GUIS :')
-        //TO DO: take user data
         double fees = entityManager.calculateFees(transactionAccess.searchByISBN(isbn));
         
         
