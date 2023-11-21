@@ -1081,7 +1081,7 @@ public class Graphics extends JFrame {
             }
         });
     
-        confirmButton1.addActionListener(new ActionListener() { //TO DO: FINISH
+        confirmButton1.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
@@ -1118,7 +1118,7 @@ public class Graphics extends JFrame {
 
         JLabel L0,L1;
         L0 = new JLabel("Book Returned!",JLabel.CENTER);
-        L1 = new JLabel("Late Fees due = $"+fees,JLabel.CENTER);
+        L1 = new JLabel("Late Fees due =" + entityManager.formatFees(fees),JLabel.CENTER);
         
         
 

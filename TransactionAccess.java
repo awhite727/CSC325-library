@@ -45,7 +45,7 @@ public class TransactionAccess {
         transactions.add(transaction);
     }
 
-    public void editItem() {} //MD 11.9.23 NOTE: Do we need this for transactions?
+    public void editItem(){}//Currently unnecessary, but will edit the sql database
 
     public void removeItem(Transaction transaction) {//removes the transaction from the arraylist
         transactions.remove(transaction);
