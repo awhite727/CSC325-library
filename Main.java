@@ -7,6 +7,5 @@ public class Main {
                 new Graphics();
             }
         });
-        System.out.println(BookAccess.getInstance().getBooks().size());
     }
 }

@@ -449,9 +449,7 @@ public class Graphics extends JFrame {
                 //cardLayout.show(cardPanel, "initial");
         
 
-            System.out.println("ISBN" + ISBN);
             // Update the book details based on user input
-            System.out.println("details: "+bookAccess.searchByISBN(ISBN));
             
             if (textField1.getText().equals("")== false){
                 (bookAccess.searchByISBN(ISBN)).setTitle(textField1.getText());
@@ -878,7 +876,6 @@ public class Graphics extends JFrame {
     }
     
     private JPanel createScreen10() {
-        System.out.println("In createScreen10");
         JPanel panel = new JPanel();
         List<Book> copyOfBooks = bookAccess.getBooks();
         Object[][] data = new Object[copyOfBooks.size()][];
@@ -967,7 +964,6 @@ public class Graphics extends JFrame {
     }
 
     private JPanel createScreen11() {
-        System.out.println("In createScreen11");
         JPanel panel = new JPanel();
         List<People> peoples = personAccess.getPeople();
         Object[][] data = new Object[peoples.size()][];

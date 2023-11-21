@@ -1,4 +1,3 @@
-//MD: 11.9.23
 import java.util.List;
 import java.util.ArrayList;
 public class PersonAccess {
@@ -24,9 +23,6 @@ public class PersonAccess {
     }
 
     public List<People> getPeople(){
-        for(int i=0;i<people.size();i++){
-            System.out.println(i + ": " + people.get(i).getLibraryNumber());
-        }
         return people;
     }
 

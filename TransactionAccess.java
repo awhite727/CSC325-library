@@ -1,15 +1,15 @@
-//MD: 11.9.23
 import java.util.ArrayList;
 
 public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     private static TransactionAccess transactionAccess;
     TransactionAccess(){
-        String ISBN = "12345";
-        String libraryNumber = "123";
         EntityManager entityManager = new EntityManager();
-        entityManager.createTransaction(ISBN,libraryNumber);
-        transactions.add(entityManager.createTransaction(ISBN,libraryNumber));
+        transactions.add(entityManager.createTransaction("123","2"));
+        transactions.add(entityManager.createTransaction("123","3"));
+        transactions.add(entityManager.createTransaction("555","4"));
+
+
     }
     public static TransactionAccess getInstance(){
         if(transactionAccess == null){
@@ -47,18 +47,7 @@ public class TransactionAccess {
 
     public void editItem() {} //MD 11.9.23 NOTE: Do we need this for transactions?
 
-    public void removeItem(Transaction transaction) {//calculates fees due and updates People fees accrued, then removes the item
-            
-            /* Call Ashen's calculation method
-            
-            long currDay = (System.currentTimeMillis()/1000/60/60/24); //converts to days and stores
-            long daysPastDue = currDay - transaction.getDueDate(); //ex.) turned in 10.31 due 10.30
-            if (daysPastDue > 0) {
-                PersonAccess findPerson = new PersonAccess();
-                People person = findPerson.searchByID(transaction.getLibraryNumber());
-                //NOTE: Change to proper fees per day 
-                person.setFeesDue(person.getFeesDue()+(0.15*daysPastDue));
-            } */
+    public void removeItem(Transaction transaction) {//removes the transaction from the arraylist
         transactions.remove(transaction);
     }
 }

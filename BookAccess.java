@@ -1,4 +1,3 @@
-//MD: 11.9.23
 import java.util.List;
 import java.util.ArrayList;
 public class BookAccess {
@@ -22,9 +21,6 @@ public class BookAccess {
     }
 
     public List<Book> getBooks(){
-        for(int i=0;i<books.size();i++){
-            System.out.println(i + ": " + books.get(i).getISBN());
-        }
         return books;
     }
 
