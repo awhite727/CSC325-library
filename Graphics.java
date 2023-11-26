@@ -294,10 +294,15 @@ public class Graphics extends JFrame {
                 String Quantity = textField5.getText();
 
                 // Handle confirm button action here
-                bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
-                JPanel screen10 = createScreen10();  // view book
-                cardPanel.add(screen10, "Screen10");
-                cardLayout.show(cardPanel, "Confirm");
+                if (bookAccess.searchByISBN(ISBN) == null){
+                    bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
+                    JPanel screen10 = createScreen10();  // view book
+                    cardPanel.add(screen10, "Screen10");
+                    cardLayout.show(cardPanel, "Confirm");
+                    }
+                else{
+                    JOptionPane.showMessageDialog(panel, "Book with that ISBN already in the database!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
             }
         });
     
@@ -358,10 +363,19 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ISBN1 = textField1.getText();
-                JPanel screen4 = createScreen4(ISBN1);
-                cardPanel.add(screen4, "Screen4");
-                cardLayout.show(cardPanel, "Screen4");
+
+
+                if (bookAccess.searchByISBN(ISBN1) == null){
+                    JOptionPane.showMessageDialog(panel, "There is not book in database with that ISBN!", "Error", JOptionPane.ERROR_MESSAGE);                        
+                    }
+                else{
+                    JPanel screen4 = createScreen4(ISBN1);
+                    cardPanel.add(screen4, "Screen4");
+                    cardLayout.show(cardPanel, "Screen4");
+
+                    }
             }
+            
         });
 
         return panel;
@@ -525,11 +539,18 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ISBN2 = textField1.getText();
-                bookAccess.removeItem(bookAccess.searchByISBN(ISBN2));
-                JPanel screen10 = createScreen10();
-                cardPanel.add(screen10, "Screen10");
                 
-                cardLayout.show(cardPanel, "Confirm");
+                if (bookAccess.searchByISBN(ISBN2) == null){
+                    JOptionPane.showMessageDialog(panel, "There is not book in database with that ISBN!", "Error", JOptionPane.ERROR_MESSAGE);                        
+                    }
+                else{
+                    bookAccess.removeItem(bookAccess.searchByISBN(ISBN2));
+                    JPanel screen10 = createScreen10();
+                    cardPanel.add(screen10, "Screen10");
+                    
+                    cardLayout.show(cardPanel, "Confirm");
+
+                    }
             }
         });
 
@@ -647,14 +668,15 @@ public class Graphics extends JFrame {
                 String firstName = textField2.getText();
                 String lastName = textField3.getText();
                 String phoneNumber = textField4.getText();
-
-                // Handle confirm button action here
-                personAccess.addItem(entityManager.createPeople(ID, firstName, lastName, phoneNumber));
-                JPanel screen11 = createScreen11();  // view book
-                cardPanel.add(screen11, "Screen11");
-                
-                // Handle confirm button action here
-                cardLayout.show(cardPanel, "Confirm");
+                if (personAccess.searchByLibraryNumber(ID) == null){
+                    personAccess.addItem(entityManager.createPeople(ID, firstName, lastName, phoneNumber));
+                    JPanel screen11 = createScreen11();  
+                    cardPanel.add(screen11, "Screen11");
+                    cardLayout.show(cardPanel, "Confirm");
+                }
+                else{
+                    JOptionPane.showMessageDialog(panel, "There is already a member is database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     
@@ -712,9 +734,14 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ID = textField1.getText();
-                JPanel screen9 = createScreen9(ID);
-                cardPanel.add(screen9, "Screen9");
-                cardLayout.show(cardPanel, "Screen9");
+                if(personAccess.searchByLibraryNumber(ID) == null){
+                    JOptionPane.showMessageDialog(panel, "There is no member in database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    JPanel screen9 = createScreen9(ID);
+                    cardPanel.add(screen9, "Screen9");
+                    cardLayout.show(cardPanel, "Screen9");
+                }
             }
         });
 
@@ -862,11 +889,16 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ID = textField1.getText();
-                personAccess.removeItem(personAccess.searchByLibraryNumber(ID));
-                JPanel screen11 = createScreen11();
-                cardPanel.add(screen11, "Screen11");
-                
-                cardLayout.show(cardPanel, "Confirm");
+                if(personAccess.searchByLibraryNumber(ID) == null){
+                    JOptionPane.showMessageDialog(panel, "There is no member in database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    personAccess.removeItem(personAccess.searchByLibraryNumber(ID));
+                    JPanel screen11 = createScreen11();
+                    cardPanel.add(screen11, "Screen11");
+                    
+                    cardLayout.show(cardPanel, "Confirm");
+                }
             }
         });
 
@@ -880,7 +912,7 @@ public class Graphics extends JFrame {
         Object[][] data = new Object[copyOfBooks.size()][];
         for (int i = 0; i < copyOfBooks.size(); i++) {
             Book book = copyOfBooks.get(i);
-            data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()};
+            data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAvailableCopies()};
         }
     
         // String array for column names
@@ -1130,10 +1162,11 @@ public class Graphics extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
-                Transaction transaction = entityManager.createTransaction(isbn,memberID);
+                //Transaction transaction = entityManager.createTransaction(isbn,memberID);
+                Transaction transaction = entityManager.checkOut(isbn,memberID);
                 transactionAccess.addItem(transaction);
                 String dueDate = entityManager.formatDate(transaction.getDueDate());
-
+                
                 JPanel screen14 = createScreen14(dueDate);  //book checked out confirmation
                 cardPanel.add(screen14, "Screen14");
                 cardLayout.show(cardPanel, "Screen14");
@@ -1143,31 +1176,50 @@ public class Graphics extends JFrame {
         return panel;
     }
 
+
+
     private JPanel createScreen13(String isbn) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4,1,3,1));
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
         double fees = entityManager.calculateFees(transactionAccess.searchByISBN(isbn));
-        
-        
-
-        JLabel L0,L1;
-        L0 = new JLabel("Book Returned!",JLabel.CENTER);
-        L1 = new JLabel("Late Fees due =" + entityManager.formatFees(fees),JLabel.CENTER);
-        
-        
-
-
-        JButton backButton = new JButton("Back to Initial");
+    
+        JLabel L0, L1, L2;
+        L0 = new JLabel("                           Book Returned!                           ", JLabel.CENTER);
+        L0.setBorder(new EmptyBorder(10, 0, 10, 0));
+        L1 = new JLabel("Fees: ", JLabel.CENTER);
+        L1.setBorder(new EmptyBorder(10, 0, 40, 0));
+        L2 = new JLabel(entityManager.formatFees(fees), JLabel.CENTER);
+        L2.setBorder(new EmptyBorder(10, 0, 10, 0));
+        JButton backButton = new JButton("Return to Initial Screen");
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(L1)
+                .addComponent(L2))
+                .addComponent(backButton);
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(backButton));
+               
+                //.addComponent(backButton);
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+    
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JPanel screen10 = createScreen10();
+                cardPanel.add(screen10, "Screen10");
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(backButton);
-        setVisible(true);
+    
         return panel;
     }
 
@@ -1206,7 +1258,10 @@ public class Graphics extends JFrame {
     
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JPanel screen10 = createScreen10();
+                cardPanel.add(screen10, "Screen10");
                 cardLayout.show(cardPanel, "initial");
+
             }
         });
     

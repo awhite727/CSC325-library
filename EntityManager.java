@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class EntityManager {
+	protected static final String Transaction = null;
 	// creates a Book object
 	public Book createBook (String title, String author, String ISBN, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
@@ -107,6 +108,7 @@ public class EntityManager {
 		else {
 			book.setAvailableCopies(book.getAvailableCopies()-1);
 			Transaction transaction = createTransaction(ISBN, libraryNumber);
+			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 			return transaction;
 		}
 	}
@@ -115,6 +117,7 @@ public class EntityManager {
 		// 		or the same person with multiple books checked out?
 		if (TransactionAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber()))!=TransactionAccess.getInstance().searchByISBN(transaction.getISBN())) {
 			System.out.println("This book has not been checked out!");
+			
 		}
 		else {
 			double fees = calculateFees(transaction);
@@ -123,6 +126,7 @@ public class EntityManager {
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
 			TransactionAccess.getInstance().removeItem(transaction);
+			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 		}
 	}
 }
