@@ -1,6 +1,7 @@
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -108,25 +109,38 @@ public class EntityManager {
 		else {
 			book.setAvailableCopies(book.getAvailableCopies()-1);
 			Transaction transaction = createTransaction(ISBN, libraryNumber);
-			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 			return transaction;
 		}
 	}
-	public void returnBook(Transaction transaction) {
+	public Transaction returnBook(String memberID, String isbn) {
 		// AW 11/14 how to handle the same book checked out by different people
 		// 		or the same person with multiple books checked out?
-		if (TransactionAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber()))!=TransactionAccess.getInstance().searchByISBN(transaction.getISBN())) {
+		ArrayList<Transaction> transaction1 = TransactionAccess.getInstance().searchByLibraryNumber(memberID);
+		ArrayList<Transaction> transaction2 = TransactionAccess.getInstance().searchByISBN(isbn);
+		Transaction transaction = null;
+		for(int i=0; i < transaction1.size(); i++){
+			for(int j=0; j < transaction2.size(); j++){
+				if (transaction1.get(i) == transaction2.get(j)){
+					System.out.println("1: " + transaction1.get(i));
+					System.out.println("2: " + transaction2.get(j));
+					transaction = transaction1.get(i);
+				}
+			}
+		}
+		
+		if (transaction == null) {
 			System.out.println("This book has not been checked out!");
-			
+			return null;
 		}
 		else {
 			double fees = calculateFees(transaction);
-			People user = PersonAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber()));
-			Book book = BookAccess.getInstance().searchByISBN(transaction.getISBN());
+			People user = PersonAccess.getInstance().searchByLibraryNumber(memberID);
+			Book book = BookAccess.getInstance().searchByISBN(isbn);
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
 			TransactionAccess.getInstance().removeItem(transaction);
 			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
+			return transaction;
 		}
 	}
 }

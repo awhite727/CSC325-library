@@ -18,26 +18,34 @@ public class TransactionAccess {
         return transactionAccess;
     }
 
-    public Transaction searchByLibraryNumber(String libraryNumber){
+    public ArrayList<Transaction> searchByLibraryNumber(String libraryNumber){
         Transaction transactionHold; 
+        ArrayList<Transaction> allOfLibraryNumber = new ArrayList<>();
         for (int i=0;i<transactions.size();i++){
             transactionHold = transactions.get(i);
             if(libraryNumber.strip().equalsIgnoreCase(Integer.toString(transactionHold.getLibraryNumber()))){
-                return transactionHold;
+                allOfLibraryNumber.add(transactionHold);
             }
         }
-        return null;
+        if (allOfLibraryNumber.isEmpty()){
+            return null;
+        }
+        return allOfLibraryNumber;
     }
 
-    public Transaction searchByISBN(String isbn){
-        Transaction transactionHold; 
+    public ArrayList<Transaction> searchByISBN(String isbn){
+        Transaction transactionHold;
+        ArrayList<Transaction> allOfIsbn = new ArrayList<>();
         for (int i=0;i<transactions.size();i++){
             transactionHold = transactions.get(i);
             if(isbn.equalsIgnoreCase(transactionHold.getISBN().strip())){
-                return transactionHold;
+                allOfIsbn.add(transactionHold);
             }
         }
-        return null;
+        if (allOfIsbn.isEmpty()){
+            return null;
+        }
+        return allOfIsbn;
     }
 
     //searchBy unneeded?

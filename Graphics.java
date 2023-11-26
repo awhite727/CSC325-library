@@ -1151,9 +1151,8 @@ public class Graphics extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
-                //TO DO: Handle if the transaction is not found
-                entityManager.returnBook(TransactionAccess.getInstance().searchByLibraryNumber(memberID));
-                JPanel screen13 = createScreen13(isbn); //returning book confirmation
+                Transaction transaction = entityManager.returnBook(memberID, isbn);
+                JPanel screen13 = createScreen13(transaction); //returning book confirmation
                 cardPanel.add(screen13, "Screen13");
                 cardLayout.show(cardPanel, "Screen13");
             }
@@ -1178,11 +1177,11 @@ public class Graphics extends JFrame {
 
 
 
-    private JPanel createScreen13(String isbn) {
+    private JPanel createScreen13(Transaction transaction) {
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
-        double fees = entityManager.calculateFees(transactionAccess.searchByISBN(isbn));
+        double fees = entityManager.calculateFees(transaction);
     
         JLabel L0, L1, L2;
         L0 = new JLabel("                           Book Returned!                           ", JLabel.CENTER);
