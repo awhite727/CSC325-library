@@ -1,7 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -963,7 +962,8 @@ public class Graphics extends JFrame {
                book.getGenre().toLowerCase().contains(searchText);
     }
 
-    private JPanel createScreen11() {
+
+   private JPanel createScreen11() {
         JPanel panel = new JPanel();
         List<People> peoples = personAccess.getPeople();
         Object[][] data = new Object[peoples.size()][];
@@ -971,10 +971,10 @@ public class Graphics extends JFrame {
             People people = peoples.get(i);
             data[i] = new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), entityManager.formatFees(people.getFeesDue())};
         }
+    
         // String array for column names
         String[] columns = new String[]{"Library ID","First Name","Last Name","Phone Number","Fees Due"};
-        // 2D array for table data
-
+    
         // Class array for column classes
         final Class<?>[] columnClass = new Class[]{int.class, String.class, String.class,String.class, String.class};
 
@@ -984,37 +984,73 @@ public class Graphics extends JFrame {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-
+    
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnClass[columnIndex];
             }
         };
-
+    
         // Create JTable with the model
         JTable table = new JTable(model);
         table.setShowGrid(true);
         table.setShowHorizontalLines(true);
         table.setShowVerticalLines(true);
+    
         // Set up the panel layout
         panel.setLayout(new BorderLayout());
-
+    
+        // Adds a search bar
+        JTextField searchField = new JTextField(20); // changes width of search bar
+        JButton searchButton = new JButton("Search"); // search button
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        searchPanel.add(new JLabel("Search: "));
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+    
+        // Adds a listener for the search button
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText().toLowerCase().strip();
+                filterTableData_p(model, peoples, searchText);
+            }
+        });
+    
+        panel.add(searchPanel, BorderLayout.NORTH);
+    
         // Add the table to the panel with a JScrollPane
         panel.add(new JScrollPane(table), BorderLayout.CENTER);
-
+    
         JButton backButton = new JButton("Back to Initial");
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        panel.add(backButton, BorderLayout.NORTH);
-
+    
+        panel.add(backButton, BorderLayout.SOUTH);
+    
         return panel;
     }
-
-
+    
+    private void filterTableData_p(DefaultTableModel model, List<People> peoples, String searchText) {
+        model.setRowCount(0); // clears the existing rows
+    
+        for (People people : peoples) {
+            if (peopleMatchesSearch(people, searchText)) {
+                model.addRow(new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), people.getFeesDue()});
+            }
+        }
+    }
+    
+    private boolean peopleMatchesSearch(People people, String searchText) {
+        return Integer.toString(people.getLibraryNumber()).toLowerCase().contains(searchText) ||
+               people.getFirstName().toLowerCase().contains(searchText) ||
+               people.getLastName().toLowerCase().contains(searchText) ||
+               people.getPhoneNumber().toLowerCase().contains(searchText) ||
+               entityManager.formatFees(people.getFeesDue()).toLowerCase().contains(searchText);
+    }
 
 
     
@@ -1041,8 +1077,6 @@ public class Graphics extends JFrame {
         JButton confirmButton1 = new JButton("Confirm (Returning)");
         JButton confirmButton2 = new JButton("Confirm (Borrowing)");
     
-        //layout.setAutoCreateGaps(true);
-        //layout.setAutoCreateContainerGaps(true);
     
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
         vGroup.addComponent(L0)
@@ -1139,28 +1173,43 @@ public class Graphics extends JFrame {
 
     private JPanel createScreen14(String dueDate) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6,2,3,1));
-
-        JLabel L0,L1,L2,L3;
-        L0 = new JLabel("Book Has Been Checked Out!",JLabel.CENTER);
-        L1 = new JLabel();
-        L2 = new JLabel("Return date: ",JLabel.CENTER);
-        L3 = new JLabel(dueDate);
-
-        JButton backButton = new JButton("Back to Initial");
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+    
+        JLabel L0, L1, L2;
+        L0 = new JLabel("                       Book Has Been Checked Out!                       ", JLabel.CENTER);
+        L0.setBorder(new EmptyBorder(10, 0, 10, 0));
+        L1 = new JLabel("Due date: ", JLabel.CENTER);
+        L1.setBorder(new EmptyBorder(10, 0, 40, 0));
+        L2 = new JLabel(dueDate, JLabel.CENTER);
+        L2.setBorder(new EmptyBorder(10, 0, 10, 0));
+        JButton backButton = new JButton("Return to Initial Screen");
+    
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+        vGroup.addComponent(L0)
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(L1)
+                .addComponent(L2))
+                .addComponent(backButton);
+    
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(L0)
+                        .addComponent(L1)
+                        .addComponent(L2)
+                        .addComponent(backButton));
+               
+                //.addComponent(backButton);
+    
+        layout.setVerticalGroup(vGroup);
+        layout.setHorizontalGroup(hGroup);
+    
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "initial");
             }
         });
-
-        panel.add(L0);
-        panel.add(L1);
-        panel.add(L2);
-        panel.add(L3);
-        panel.add(L1);
-        panel.add(backButton);
-        setVisible(true);
+    
         return panel;
-    } 
+    }
 }
