@@ -95,7 +95,7 @@ public class Graphics extends JFrame {
         panel.setLayout(new GridLayout(5,15,3,1));
         JLabel L0;
 
-        L0 = new JLabel("<html><b>Thank you for choosing to use this Library Managemet System! Please choose the button corresponding to your needs.</b></html>",JLabel.CENTER);
+        L0 = new JLabel("<html><b>Thank you for choosing to use this Library Management System! Please choose the button corresponding to your needs.</b></html>",JLabel.CENTER);
         panel.add(L0);
         for (String buttonText : buttonTexts) {
             JButton button = new JButton(buttonText);
@@ -294,14 +294,14 @@ public class Graphics extends JFrame {
                 String Quantity = textField5.getText();
 
                 // Handle confirm button action here
-                if (bookAccess.searchByISBN(ISBN) == null){
-                    bookAccess.addItem(entityManager.createBook(Title, Author, ISBN, Genre, Quantity));
+                String errorCheck = entityManager.createBook(Title, Author, ISBN, Genre, Quantity);
+                if (errorCheck == null){ //if no error
                     JPanel screen10 = createScreen10();  // view book
                     cardPanel.add(screen10, "Screen10");
                     cardLayout.show(cardPanel, "Confirm");
-                    }
+                }
                 else{
-                    JOptionPane.showMessageDialog(panel, "Book with that ISBN already in the database!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
                     }
             }
         });
