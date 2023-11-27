@@ -10,50 +10,49 @@ public class EntityManager {
 	// creates a Book object
 	public String createBook (String title, String author, String ISBN, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
-		
 		try{
-			if((title==null)||(author==null)||(ISBN==null)||(genre==null)||(copies==null)){
-				throw new EmptyFieldException();
+			if(title.equals("")||author.equals("")||ISBN.equals("")||genre.equals("")||copies.equals("")){
+				return "Please include something in all fields.";
+			} else {
+				int copyInt = Integer.parseInt(copies);
+				if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
+					Book book = new Book(title, author, ISBN, genre, copyInt);
+					BookAccess.getInstance().addItem(book);
+					return null;
+				}
+				else {
+					return ISBN + " already belongs to an existing book";
+				}
 			}
 
-			int copyInt = Integer.parseInt(copies);
-			if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
-				Book book = new Book(title, author, ISBN, genre, copyInt);
-				BookAccess.getInstance().addItem(book);
-				return null;
-			}
-			else {
-				return ISBN + " already belongs to an existing book";
-			}
 		} catch(IllegalArgumentException e){
-			return "\"" + copies + "\"" + " is not an integer";
-		} catch (EmptyFieldException except){
-			return "All text fields must be filled to create a book";
+			return "\"" + copies + "\" is not an integer";
 		}
 	}
 	// creates a People object
-	public People createPeople (String libraryNumber, String firstName, String lastName, String phoneNumber) {
+	public String createPeople (String libraryNumber, String firstName, String lastName, String phoneNumber) {
         // passes parameters into People
 		try{
+			if(libraryNumber.equals("")||firstName.equals("")||lastName.equals("")||phoneNumber.equals("")){
+				return "Please include something in all fields.";
+			} else {
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
 			if (PersonAccess.getInstance().searchByLibraryNumber(libraryNumber) == null) {
 				People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
-				return people;
-			}
-			else {
-				System.out.println(libraryNumber + " already belongs to an existing user.");
+				PersonAccess.getInstance().addItem(people);
 				return null;
 			}
-			
+			else {
+				return "\"" + libraryNumber + "\" already belongs to an existing user.";
+			}
+			}
 		} catch(IllegalArgumentException e){
-			System.out.println(libraryNumber + " is not an integer");
-			e.printStackTrace();
-			return null; 
+			return "\"" + libraryNumber + "\" is not an integer";
 		}
 		
 	}
 	// creates a Transaction object
-	public Transaction createTransaction (String ISBN, String libraryNumber) {
+	public String createTransaction (String ISBN, String libraryNumber) {
         // converts libraryNumber to an integer
 		try{
 			int libraryNumberInt = Integer.parseInt(libraryNumber);
@@ -64,11 +63,10 @@ public class EntityManager {
 			Date dueDate = dueDateTemp.getTime();
         	// passes parameters into Transaction		
 			Transaction transaction = new Transaction(ISBN, libraryNumberInt, dueDate);
-			return transaction;
+			TransactionAccess.getInstance().addItem(transaction);
+			return null;
 		} catch(IllegalArgumentException e){
-			System.out.println(libraryNumber + " is not an integer");
-			e.printStackTrace();
-			return null; 
+			return "\"" + libraryNumber + "\" is not an integer";
 		}
 	}
 	// calculates fees due for a transaction

@@ -362,14 +362,16 @@ public class Graphics extends JFrame {
 
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String ISBN1 = textField1.getText();
+                String ISBN = textField1.getText();
 
-
-                if (bookAccess.searchByISBN(ISBN1) == null){
+                if (bookAccess.searchByISBN(ISBN) == null){
                     JOptionPane.showMessageDialog(panel, "There is not book in database with that ISBN!", "Error", JOptionPane.ERROR_MESSAGE);                        
-                    }
+                }
+                else if(ISBN == ""){
+                    JOptionPane.showMessageDialog(panel, "Please input an ISBN", "Error", JOptionPane.ERROR_MESSAGE);   
+                }
                 else{
-                    JPanel screen4 = createScreen4(ISBN1);
+                    JPanel screen4 = createScreen4(ISBN);
                     cardPanel.add(screen4, "Screen4");
                     cardLayout.show(cardPanel, "Screen4");
 
@@ -669,10 +671,15 @@ public class Graphics extends JFrame {
                 String lastName = textField3.getText();
                 String phoneNumber = textField4.getText();
                 if (personAccess.searchByLibraryNumber(ID) == null){
-                    personAccess.addItem(entityManager.createPeople(ID, firstName, lastName, phoneNumber));
+                    String errorCheck = entityManager.createPeople(ID, firstName, lastName, phoneNumber);
+                    if (errorCheck==null){
                     JPanel screen11 = createScreen11();  
                     cardPanel.add(screen11, "Screen11");
                     cardLayout.show(cardPanel, "Confirm");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(panel, "There is already a member is database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
