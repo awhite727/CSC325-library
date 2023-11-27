@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
@@ -7,7 +9,9 @@ public class TransactionAccess {
         EntityManager entityManager = new EntityManager();
         transactions.add(entityManager.createTransaction("123","2"));
         transactions.add(entityManager.createTransaction("123","3"));
-        transactions.add(entityManager.createTransaction("555","4").setDueDate(new Date() - 3));
+        Date dateTest = new Date();
+        dateTest.add(Calendar.DATE, -7);
+        transactions.add(entityManager.createTransaction("555","4").setDueDate(dateTest));
 
 
     }
