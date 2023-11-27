@@ -94,7 +94,7 @@ public class EntityManager {
 		return "$" + formatter.format(fees);
 	}
 	// logic for checking out a book
-	public Transaction checkOut(String ISBN, String libraryNumber) {
+	public String checkOut(String ISBN, String libraryNumber) {
 		Book book = BookAccess.getInstance().searchByISBN(ISBN);
 		People people = PersonAccess.getInstance().searchByLibraryNumber(libraryNumber);
 		if (book == null) {
@@ -141,7 +141,7 @@ public class EntityManager {
 			Book book = BookAccess.getInstance().searchByISBN(isbn);
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
-			//TransactionAccess.getInstance().removeItem(transaction);
+			TransactionAccess.getInstance().removeItem(transaction);
 			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 			return transaction;
 		}
