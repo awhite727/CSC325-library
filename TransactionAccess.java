@@ -7,7 +7,7 @@ public class TransactionAccess {
         EntityManager entityManager = new EntityManager();
         transactions.add(entityManager.createTransaction("123","2"));
         transactions.add(entityManager.createTransaction("123","3"));
-        transactions.add(entityManager.createTransaction("555","4"));
+        transactions.add(entityManager.createTransaction("555","4").setDueDate(new Date() - 3));
 
 
     }
