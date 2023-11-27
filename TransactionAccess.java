@@ -12,7 +12,7 @@ public class TransactionAccess {
         Calendar dateTestTemp = Calendar.getInstance();
 		dateTestTemp.setTime(new Date());
 		dateTestTemp.add(Calendar.DATE,-7);
-		Date dateTest = dueDateTemp.getTime();
+		Date dateTest = dateTestTemp.getTime();
         transactions.add(entityManager.createTransaction("555","4").setDueDate(dateTest));
 
 
