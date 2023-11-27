@@ -143,7 +143,7 @@ public class EntityManager {
 			Book book = BookAccess.getInstance().searchByISBN(isbn);
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
-			TransactionAccess.getInstance().removeItem(transaction);
+			//TransactionAccess.getInstance().removeItem(transaction);
 			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 			return transaction;
 		}
