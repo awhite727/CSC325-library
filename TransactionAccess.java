@@ -9,6 +9,7 @@ public class TransactionAccess {
         EntityManager entityManager = new EntityManager();
         transactions.add(entityManager.createTransaction("123","2"));
         transactions.add(entityManager.createTransaction("123","3"));
+        transactions.add(entityManager.createTransaction("179", "3"));
         Calendar dateTestTemp = Calendar.getInstance();
 		dateTestTemp.setTime(new Date());
 		dateTestTemp.add(Calendar.DATE,-7);
