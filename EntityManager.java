@@ -8,22 +8,27 @@ import java.util.Date;
 public class EntityManager {
 	protected static final String Transaction = null;
 	// creates a Book object
-	public Book createBook (String title, String author, String ISBN, String genre, String copies) {
+	public String createBook (String title, String author, String ISBN, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
+		
 		try{
+			if((title==null)||(author==null)||(ISBN==null)||(genre==null)||(copies==null)){
+				throw new EmptyFieldException();
+			}
+
 			int copyInt = Integer.parseInt(copies);
 			if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
 				Book book = new Book(title, author, ISBN, genre, copyInt);
-				return book;
-			}
-			else {
-				System.out.println(ISBN + " already belongs to an existing book");
+				BookAccess.getInstance().addItem(book);
 				return null;
 			}
+			else {
+				return ISBN + " already belongs to an existing book";
+			}
 		} catch(IllegalArgumentException e){
-			System.out.println(copies + " is not an integer");
-			e.printStackTrace();
-			return null; 
+			return "\"" + copies + "\"" + " is not an integer";
+		} catch (EmptyFieldException except){
+			return "All text fields must be filled to create a book";
 		}
 	}
 	// creates a People object
