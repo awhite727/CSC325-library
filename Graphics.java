@@ -16,7 +16,6 @@ public class Graphics extends JFrame {
     
 
     public Graphics() {
-        
         // Set up the JFrame
         setTitle("Library Management System");
         setSize(900, 650);
@@ -185,6 +184,7 @@ public class Graphics extends JFrame {
         return panel;
     }
     private JPanel createPanel_1(String panelName, String... buttonTexts) { //gives user options for book managemnt
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5,2,3,1));
 
@@ -211,9 +211,7 @@ public class Graphics extends JFrame {
 
         return panel;
     }
-
-
-
+    
     private JPanel createScreen2() { //add book screen
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
@@ -320,10 +318,6 @@ public class Graphics extends JFrame {
     
         return panel;
     }
-    
-    
-    
-
     private JPanel createScreen3() { //screen for updating book part 1:Enter ISBN
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
@@ -395,7 +389,6 @@ public class Graphics extends JFrame {
         return panel;
 
     }
-
     private JPanel createScreen4(String ISBN) { //screen for updating book part 2: entering updated info
         
 
@@ -503,8 +496,6 @@ public class Graphics extends JFrame {
 
         return panel;
     }
-
-
    private JPanel createScreen5() {
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
@@ -999,7 +990,7 @@ public class Graphics extends JFrame {
     
         for (Book book : copyOfBooks) {
             if (bookMatchesSearch(book, searchText)) {
-                model.addRow(new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getTotalCopies()});
+                model.addRow(new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies()});
             }
         }
     }
@@ -1088,7 +1079,7 @@ public class Graphics extends JFrame {
     
         for (People people : peoples) {
             if (peopleMatchesSearch(people, searchText)) {
-                model.addRow(new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), people.getFeesDue()});
+                model.addRow(new Object[]{people.getLibraryNumber(), people.getFirstName(), people.getLastName(), people.getPhoneNumber(), entityManager.formatFees(people.getFeesDue())});
             }
         }
     }
