@@ -1158,24 +1158,30 @@ public class Graphics extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
-                Transaction transaction = entityManager.returnBook(memberID, isbn);
-                JPanel screen13 = createScreen13(transaction); //returning book confirmation
-                cardPanel.add(screen13, "Screen13");
-                cardLayout.show(cardPanel, "Screen13");
+                String errorCheck = entityManager.returnBook(memberID, isbn);
+                if (Character.toString(errorCheck.charAt(0)).equals("$")){
+                    JPanel screen13 = createScreen13(errorCheck); //returning book confirmation
+                    cardPanel.add(screen13, "Screen13");
+                    cardLayout.show(cardPanel, "Screen13");
+                } else{
+                    JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         confirmButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
-                //Transaction transaction = entityManager.createTransaction(isbn,memberID);
-                Transaction transaction = entityManager.checkOut(isbn,memberID);
-                transactionAccess.addItem(transaction);
-                String dueDate = entityManager.formatDate(transaction.getDueDate());
+                String errorCheck = entityManager.checkOut(isbn,memberID);
+                if (errorCheck == null){
+                    String dueDate = entityManager.formatDate(transactionAccess.mostRecentTransaction().getDueDate());
+                    JPanel screen14 = createScreen14(dueDate);  //book checked out confirmation
+                    cardPanel.add(screen14, "Screen14");
+                    cardLayout.show(cardPanel, "Screen14");
+                } else{
+                    JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
+                }
                 
-                JPanel screen14 = createScreen14(dueDate);  //book checked out confirmation
-                cardPanel.add(screen14, "Screen14");
-                cardLayout.show(cardPanel, "Screen14");
             }
         });
     
@@ -1184,18 +1190,17 @@ public class Graphics extends JFrame {
 
 
 
-    private JPanel createScreen13(Transaction transaction) {
+    private JPanel createScreen13(String fees) {
         JPanel panel = new JPanel();
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
-        double fees = entityManager.calculateFees(transaction);
     
         JLabel L0, L1, L2;
         L0 = new JLabel("                           Book Returned!                           ", JLabel.CENTER);
         L0.setBorder(new EmptyBorder(10, 0, 10, 0));
         L1 = new JLabel("Fees: ", JLabel.CENTER);
         L1.setBorder(new EmptyBorder(10, 0, 40, 0));
-        L2 = new JLabel(entityManager.formatFees(fees), JLabel.CENTER);
+        L2 = new JLabel(fees, JLabel.CENTER);
         L2.setBorder(new EmptyBorder(10, 0, 10, 0));
         JButton backButton = new JButton("Return to Initial Screen");
     

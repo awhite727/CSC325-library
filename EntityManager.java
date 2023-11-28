@@ -98,52 +98,38 @@ public class EntityManager {
 		Book book = BookAccess.getInstance().searchByISBN(ISBN);
 		People people = PersonAccess.getInstance().searchByLibraryNumber(libraryNumber);
 		if (book == null) {
-			System.out.println("Invalid ISBN.");
-			return null;
+			System.out.println();
+			return "That book does not exist";
 		}
 		else if (people == null) {
-			System.out.println("Invalid MemberID.");
-			return null;
+			System.out.println();
+			return "That user does not exist";
 		}
 		else if (book.getAvailableCopies()==0) {
-			System.out.println("This book has no available copies at this time.");
-			return null;
+			return "This book has no available copies at this time.";
 		}
 		else {
 			book.setAvailableCopies(book.getAvailableCopies()-1);
-			Transaction transaction = createTransaction(ISBN, libraryNumber);
-			return transaction;
+			String checkAndCreate = createTransaction(ISBN, libraryNumber);
+			return checkAndCreate;
 		}
 	}
-	public Transaction returnBook(String memberID, String isbn) {
-		// AW 11/14 how to handle the same book checked out by different people
-		// 		or the same person with multiple books checked out?
-		ArrayList<Transaction> transaction1 = TransactionAccess.getInstance().searchByLibraryNumber(memberID);
-		ArrayList<Transaction> transaction2 = TransactionAccess.getInstance().searchByISBN(isbn);
-		Transaction transaction = null;
-		for(int i=0; i < transaction1.size(); i++){
-			for(int j=0; j < transaction2.size(); j++){
-				if (transaction1.get(i) == transaction2.get(j)){
-					System.out.println("1: " + transaction1.get(i));
-					System.out.println("2: " + transaction2.get(j));
-					transaction = transaction1.get(i);
-				}
-			}
-		}
-		
-		if (transaction == null) {
-			System.out.println("This book has not been checked out!");
-			return null;
+	public String returnBook(String memberID, String isbn) {
+		ArrayList<Transaction> allMatchingTransactions = TransactionAccess.getInstance().searchByBoth(memberID,isbn);
+		if (allMatchingTransactions.isEmpty()) {
+			return "This book has not been checked out by the listed user";
 		}
 		else {
-			double fees = calculateFees(transaction);
+			//assume they are returning the oldest book
+			double fees = calculateFees(allMatchingTransactions.get(0));
 			People user = PersonAccess.getInstance().searchByLibraryNumber(memberID);
 			Book book = BookAccess.getInstance().searchByISBN(isbn);
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
-			TransactionAccess.getInstance().removeItem(transaction);
+			TransactionAccess.getInstance().removeItem(allMatchingTransactions.get(0));
 			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
-			return transaction;
+
+			return formatFees(fees);
 		}
 	}
 }

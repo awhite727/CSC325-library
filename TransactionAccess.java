@@ -6,19 +6,30 @@ public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     private static TransactionAccess transactionAccess;
     TransactionAccess(){
-        EntityManager entityManager = new EntityManager();
-        transactions.add(entityManager.createTransaction("123","2"));
-        transactions.add(entityManager.createTransaction("123","3"));
-        transactions.add(entityManager.createTransaction("179", "3"));
+        //due today
+        transactions.add(new Transaction("123", 2,new Date())); 
+
+        //due two days from now
+        Calendar calendarSetter = Calendar.getInstance();
+		calendarSetter.setTime(new Date());
+		calendarSetter.add(Calendar.DATE,2);
+		Date dueDate = calendarSetter.getTime();
+        transactions.add(new Transaction("123", 3,dueDate));
+
+        //due a week from now
+        calendarSetter.add(Calendar.DATE,7);
+        dueDate = calendarSetter.getTime();
+        transactions.add(new Transaction("179", 3,dueDate));
         Calendar dateTestTemp = Calendar.getInstance();
 		dateTestTemp.setTime(new Date());
+
+        //due last week
 		dateTestTemp.add(Calendar.DATE,-7);
 		Date dateTest = dateTestTemp.getTime();
-        transactions.add(entityManager.createTransaction("555","4"));
+        transactions.add(new Transaction("555",4,dateTest));
         transactions.get(3).setDueDate(dateTest);
-
-
     }
+
     public static TransactionAccess getInstance(){
         if(transactionAccess == null){
             transactionAccess = new TransactionAccess();
@@ -54,6 +65,30 @@ public class TransactionAccess {
             return null;
         }
         return allOfIsbn;
+    }
+
+    public ArrayList<Transaction> searchByBoth(String memberID, String isbn){
+        ArrayList<Transaction> matchingFields = new ArrayList<>();
+        ArrayList<Transaction> transaction1 = searchByLibraryNumber(memberID);
+		ArrayList<Transaction> transaction2 = searchByISBN(isbn);
+        if ((transaction1 == null)||(transaction2 == null)){
+            return matchingFields;
+        }
+        //searches all transactions oldest to most recent and adds all transactions with matching isbn and memberID
+		for(int i=0; i < transaction1.size(); i++){ 
+			for(int j=0; j < transaction2.size(); j++){
+				if (transaction1.get(i) == transaction2.get(j)){
+					System.out.println("1: " + transaction1.get(i));
+					System.out.println("2: " + transaction2.get(j));
+					matchingFields.add(transaction1.get(i));
+				}
+			}
+		}
+        return matchingFields;
+    }
+
+    public Transaction mostRecentTransaction(){
+        return transactions.get(transactions.size()-1);
     }
 
     //searchBy unneeded?
