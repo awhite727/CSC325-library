@@ -10,7 +10,7 @@ public class PersonAccess {
         people.add(new People(2,"Sally", "Jackson", "2225555"));
         people.add(new People(3,"John", "Doe", "9995555"));
         people.add(new People(4,"Jane", "Doe", "9257234"));
-        people.get(3).updateFeesDue(4);
+        people.get(2).updateFeesDue(.2);
 
     }
 

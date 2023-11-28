@@ -670,19 +670,14 @@ public class Graphics extends JFrame {
                 String firstName = textField2.getText();
                 String lastName = textField3.getText();
                 String phoneNumber = textField4.getText();
-                if (personAccess.searchByLibraryNumber(ID) == null){
-                    String errorCheck = entityManager.createPeople(ID, firstName, lastName, phoneNumber);
-                    if (errorCheck==null){
-                    JPanel screen11 = createScreen11();  
-                    cardPanel.add(screen11, "Screen11");
-                    cardLayout.show(cardPanel, "Confirm");
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                String errorCheck = entityManager.createPeople(ID, firstName, lastName, phoneNumber);
+                if (errorCheck==null){
+                JPanel screen11 = createScreen11();  
+                cardPanel.add(screen11, "Screen11");
+                cardLayout.show(cardPanel, "Confirm");
                 }
                 else{
-                    JOptionPane.showMessageDialog(panel, "There is already a member is database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, errorCheck, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -1159,7 +1154,7 @@ public class Graphics extends JFrame {
                 String memberID = textField1.getText();
                 String isbn = textField2.getText();
                 String errorCheck = entityManager.returnBook(memberID, isbn);
-                if (Character.toString(errorCheck.charAt(0)).equals("$")){
+                if (Character.toString(errorCheck.charAt(0)).equals("$")){ //if starts with "$"
                     JPanel screen13 = createScreen13(errorCheck); //returning book confirmation
                     cardPanel.add(screen13, "Screen13");
                     cardLayout.show(cardPanel, "Screen13");

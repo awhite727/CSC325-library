@@ -6,28 +6,28 @@ public class TransactionAccess {
     ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     private static TransactionAccess transactionAccess;
     TransactionAccess(){
+        Calendar calendarSetter = Calendar.getInstance();
+		calendarSetter.setTime(new Date());
+        Date dueDate;
         //due today
         transactions.add(new Transaction("123", 2,new Date())); 
 
         //due two days from now
-        Calendar calendarSetter = Calendar.getInstance();
-		calendarSetter.setTime(new Date());
+
 		calendarSetter.add(Calendar.DATE,2);
-		Date dueDate = calendarSetter.getTime();
+		dueDate = calendarSetter.getTime();
         transactions.add(new Transaction("123", 3,dueDate));
 
         //due a week from now
-        calendarSetter.add(Calendar.DATE,7);
+        calendarSetter.add(Calendar.DATE,5);
         dueDate = calendarSetter.getTime();
         transactions.add(new Transaction("179", 3,dueDate));
-        Calendar dateTestTemp = Calendar.getInstance();
-		dateTestTemp.setTime(new Date());
-
+        
         //due last week
-		dateTestTemp.add(Calendar.DATE,-7);
-		Date dateTest = dateTestTemp.getTime();
-        transactions.add(new Transaction("555",4,dateTest));
-        transactions.get(3).setDueDate(dateTest);
+		calendarSetter.add(Calendar.DATE,-14);
+		dueDate = calendarSetter.getTime();
+        transactions.add(new Transaction("555",4,dueDate));
+        transactions.get(3).setDueDate(dueDate);
     }
 
     public static TransactionAccess getInstance(){
@@ -35,6 +35,14 @@ public class TransactionAccess {
             transactionAccess = new TransactionAccess();
         }
         return transactionAccess;
+    }
+
+    public static void main(String[] args) {
+        TransactionAccess ta = TransactionAccess.getInstance();
+        EntityManager et = new EntityManager();
+        for (int i=0;i<ta.transactions.size(); i++) {
+            System.out.println(i+1 + ": " + et.formatDate(ta.transactions.get(i).getDueDate()));
+        }
     }
 
     public ArrayList<Transaction> searchByLibraryNumber(String libraryNumber){

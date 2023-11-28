@@ -29,7 +29,7 @@ public class EntityManager {
 			}
 
 		} catch(IllegalArgumentException e){
-			return "\"" + copies + "\" is not an integer";
+			return "Copies must be a number";
 		}
 	}
 	// creates a People object
@@ -50,7 +50,7 @@ public class EntityManager {
 			}
 			}
 		} catch(IllegalArgumentException e){
-			return "\"" + libraryNumber + "\" is not an integer";
+			return "MemberID must be a number";
 		}
 		
 	}
@@ -69,7 +69,7 @@ public class EntityManager {
 			TransactionAccess.getInstance().addItem(transaction);
 			return null;
 		} catch(IllegalArgumentException e){
-			return "\"" + libraryNumber + "\" is not an integer";
+			return "MemberID must be a number";
 		}
 	}
 	// calculates fees due for a transaction
