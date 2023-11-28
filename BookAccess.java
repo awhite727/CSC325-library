@@ -11,7 +11,10 @@ public class BookAccess {
         books.add(new Book("Lord of the Flies", "William Golding", "222", "Allegorical Novel", 3));
         books.add(new Book("The Hunger Games", "Suzanne Collins", "555", "Dystopian YA", 4));
         books.add(new Book("Catching Fire", "Suzanne Collins", "687", "Dystopian YA", 4));
-        books.add(new Book("The Fault in Our Stars", "John Green", "179", "Young Adult", 0));
+        books.add(new Book("The Fault in Our Stars", "John Green", "179", "Young Adult", 1));
+        books.get(0).setAvailableCopies(0);
+        books.get(2).setAvailableCopies(3);
+        books.get(4).setAvailableCopies(0);
     }
 
     public static BookAccess getInstance(){
