@@ -475,10 +475,13 @@ public class Graphics extends JFrame {
             if (textField3.getText().equals("")== false){
                 (bookAccess.searchByISBN(ISBN)).setGenre(textField3.getText()); 
             }
-            if (textField4.getText().equals("")== false){                      
+
+            if (textField4.getText().equals("")== false){      
+                int oldTotalCopies = bookAccess.searchByISBN(ISBN).getTotalCopies();            
                 (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
+                (bookAccess.searchByISBN(ISBN)).setAvailableCopies(bookAccess.searchByISBN(ISBN).getTotalCopies() - oldTotalCopies + bookAccess.searchByISBN(ISBN).getAvailableCopies());
             }
-  
+
             JPanel screen10 = createScreen10();
             cardPanel.add(screen10, "Screen10");
             cardLayout.show(cardPanel, "Confirm");
@@ -914,15 +917,15 @@ public class Graphics extends JFrame {
         Object[][] data = new Object[copyOfBooks.size()][];
         for (int i = 0; i < copyOfBooks.size(); i++) {
             Book book = copyOfBooks.get(i);
-            data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAvailableCopies()};
+            data[i] = new Object[]{book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAvailableCopies(), book.getTotalCopies()};
         }
-    
+   
         // String array for column names
-        String[] columns = new String[]{"ISBN", "Title", "Author", "Genre", "Total Copies"};
-    
+        String[] columns = new String[]{"ISBN", "Title", "Author", "Genre", "Avaliable Copies" ,"Total Copies"};
+   
         // Class array for column classes
-        final Class<?>[] columnClass = new Class[]{String.class, String.class, String.class, String.class, String.class};
-    
+        final Class<?>[] columnClass = new Class[]{String.class, String.class, String.class, String.class, String.class, String.class};
+
         // Create table model with data
         DefaultTableModel model = new DefaultTableModel(data, columns) {
             @Override
