@@ -16,12 +16,7 @@ public class Graphics extends JFrame {
     
 
     public Graphics() {
-        try {
-            // Set the look and feel to Metal
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        
         // Set up the JFrame
         setTitle("Library Management System");
         setSize(900, 650);
