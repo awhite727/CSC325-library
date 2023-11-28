@@ -37,14 +37,6 @@ public class TransactionAccess {
         return transactionAccess;
     }
 
-    public static void main(String[] args) {
-        TransactionAccess ta = TransactionAccess.getInstance();
-        EntityManager et = new EntityManager();
-        for (int i=0;i<ta.transactions.size(); i++) {
-            System.out.println(i+1 + ": " + et.formatDate(ta.transactions.get(i).getDueDate()));
-        }
-    }
-
     public ArrayList<Transaction> searchByLibraryNumber(String libraryNumber){
         Transaction transactionHold; 
         ArrayList<Transaction> allOfLibraryNumber = new ArrayList<>();
@@ -86,8 +78,6 @@ public class TransactionAccess {
 		for(int i=0; i < transaction1.size(); i++){ 
 			for(int j=0; j < transaction2.size(); j++){
 				if (transaction1.get(i) == transaction2.get(j)){
-					System.out.println("1: " + transaction1.get(i));
-					System.out.println("2: " + transaction2.get(j));
 					matchingFields.add(transaction1.get(i));
 				}
 			}

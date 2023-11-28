@@ -101,11 +101,9 @@ public class EntityManager {
 		Book book = BookAccess.getInstance().searchByISBN(ISBN);
 		People people = PersonAccess.getInstance().searchByLibraryNumber(libraryNumber);
 		if (book == null) {
-			System.out.println();
 			return "That book does not exist";
 		}
 		else if (people == null) {
-			System.out.println();
 			return "That user does not exist";
 		}
 		else if (book.getAvailableCopies()==0) {
@@ -130,7 +128,6 @@ public class EntityManager {
 			user.updateFeesDue(fees);
 			book.setAvailableCopies(book.getAvailableCopies()+1);
 			TransactionAccess.getInstance().removeItem(allMatchingTransactions.get(0));
-			System.out.println("Avaliable Copies:"+ book.getAvailableCopies());
 
 			return formatFees(fees);
 		}
