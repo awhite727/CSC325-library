@@ -101,6 +101,23 @@ public class Graphics extends JFrame {
             JButton button = new JButton(buttonText);
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    JPanel screen2 = createScreen2();  
+                    cardPanel.add(screen2, "Screen2");
+                    JPanel screen3 = createScreen3();   
+                    cardPanel.add(screen3, "Screen3");
+                    JPanel screen4 = createScreen4("123"); //"123" is just a random value
+                    cardPanel.add(screen4, "Screen4");
+                    JPanel screen5 = createScreen5();   
+                    cardPanel.add(screen5, "Screen5");
+                    JPanel screen7 = createScreen7(); 
+                    cardPanel.add(screen7, "Screen7");
+                    JPanel screen8 = createScreen8(); 
+                    cardPanel.add(screen8, "Screen8");
+                    JPanel screen9 = createScreen9("123"); //"123" is just a random value
+                    cardPanel.add(screen9, "Screen9");
+                    JPanel screen12 = createScreen12();
+                    cardPanel.add(screen12, "Screen12");
+
                     if (buttonText.equals("Book Management")){       
                         cardLayout.show(cardPanel, "Screen1"); 
                     }
