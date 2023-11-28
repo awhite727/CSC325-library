@@ -15,6 +15,9 @@ public class EntityManager {
 				return "Please include something in all fields.";
 			} else {
 				int copyInt = Integer.parseInt(copies);
+				if (copyInt < 1){
+					return "The number of copies must be more than 0";
+				}
 				if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
 					Book book = new Book(title, author, ISBN, genre, copyInt);
 					BookAccess.getInstance().addItem(book);
