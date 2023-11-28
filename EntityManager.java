@@ -7,29 +7,51 @@ import java.util.Date;
 
 public class EntityManager {
 	protected static final String Transaction = null;
+
+	public String copiesIsInt(String copies){
+		try{
+			int copyInt = Integer.parseInt(copies);
+			if (copyInt < 1){
+				return "The number of copies must be more than 0";
+			}else {
+				return null;
+			}
+		} catch(IllegalArgumentException e){
+			return "Quantity must be a number";
+		}
+	}
+
+	public String memberIdIsInt(String memberID){
+		try{
+			if(memberID.equals("")){
+				return "Please include something in the text field.";
+			}
+			int libraryNumberInt = Integer.parseInt(memberID);
+			return null;
+		} catch(IllegalArgumentException e){
+			return "MemberID must be a number";
+		}
+	}
+
 	// creates a Book object
 	public String createBook (String title, String author, String ISBN, String genre, String copies) {
         // converts copies into an integer, and passes parameters into Book
-		try{
-			if(title.equals("")||author.equals("")||ISBN.equals("")||genre.equals("")||copies.equals("")){
-				return "Please include something in all fields.";
-			} else {
-				int copyInt = Integer.parseInt(copies);
-				if (copyInt < 1){
-					return "The number of copies must be more than 0";
-				}
+		if(title.equals("")||author.equals("")||ISBN.equals("")||genre.equals("")||copies.equals("")){
+			return "Please include something in all fields.";
+		} else {
+			String isCopiesInt = copiesIsInt(copies);
+			if (isCopiesInt == null){
 				if (BookAccess.getInstance().searchByISBN(ISBN) == null) {
-					Book book = new Book(title, author, ISBN, genre, copyInt);
+					Book book = new Book(title, author, ISBN, genre, Integer.parseInt(copies));
 					BookAccess.getInstance().addItem(book);
 					return null;
 				}
 				else {
 					return ISBN + " already belongs to an existing book";
 				}
+			} else{
+				return isCopiesInt;
 			}
-
-		} catch(IllegalArgumentException e){
-			return "Copies must be a number";
 		}
 	}
 	// creates a People object
@@ -39,16 +61,19 @@ public class EntityManager {
 			if(libraryNumber.equals("")||firstName.equals("")||lastName.equals("")||phoneNumber.equals("")){
 				return "Please include something in all fields.";
 			} else {
-			int libraryNumberInt = Integer.parseInt(libraryNumber);
-			if (PersonAccess.getInstance().searchByLibraryNumber(libraryNumber) == null) {
-				People people = new People(libraryNumberInt, firstName, lastName, phoneNumber);
-				PersonAccess.getInstance().addItem(people);
-				return null;
+			if (memberIdIsInt(libraryNumber)==null){
+				if (PersonAccess.getInstance().searchByLibraryNumber(libraryNumber) == null) {
+					People people = new People(Integer.parseInt(libraryNumber), firstName, lastName, phoneNumber);
+					PersonAccess.getInstance().addItem(people);
+					return null;
+				}
+				else {
+					return "\"" + libraryNumber + "\" already belongs to an existing user.";
+				}
+			} else{
+				return memberIdIsInt(libraryNumber);
 			}
-			else {
-				return "\"" + libraryNumber + "\" already belongs to an existing user.";
-			}
-			}
+		}
 		} catch(IllegalArgumentException e){
 			return "MemberID must be a number";
 		}

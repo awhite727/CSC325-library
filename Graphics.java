@@ -481,15 +481,21 @@ public class Graphics extends JFrame {
                 (bookAccess.searchByISBN(ISBN)).setGenre(textField3.getText()); 
             }
 
-            if (textField4.getText().equals("")== false){      
-                int oldTotalCopies = bookAccess.searchByISBN(ISBN).getTotalCopies();            
-                (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
-                (bookAccess.searchByISBN(ISBN)).setAvailableCopies(bookAccess.searchByISBN(ISBN).getTotalCopies() - oldTotalCopies + bookAccess.searchByISBN(ISBN).getAvailableCopies());
+            if (textField4.getText().equals("")== false){
+                int oldTotalCopies = bookAccess.searchByISBN(ISBN).getTotalCopies();
+                if(entityManager.copiesIsInt(textField4.getText())==null){
+                    (bookAccess.searchByISBN(ISBN)).setTotalCopies(Integer.parseInt(textField4.getText()));
+                    (bookAccess.searchByISBN(ISBN)).setAvailableCopies(bookAccess.searchByISBN(ISBN).getTotalCopies() - oldTotalCopies + bookAccess.searchByISBN(ISBN).getAvailableCopies());
+                    JPanel screen10 = createScreen10();
+                    cardPanel.add(screen10, "Screen10");
+                    cardLayout.show(cardPanel, "Confirm");
+                }else{
+                    JOptionPane.showMessageDialog(panel, entityManager.copiesIsInt(textField4.getText()), "Error", JOptionPane.ERROR_MESSAGE);                        
+                }
+                
             }
 
-            JPanel screen10 = createScreen10();
-            cardPanel.add(screen10, "Screen10");
-            cardLayout.show(cardPanel, "Confirm");
+            
             }
         });
     
@@ -742,10 +748,13 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ID = textField1.getText();
-                if(personAccess.searchByLibraryNumber(ID) == null){
+                
+                if (entityManager.memberIdIsInt(textField1.getText())!=null){
+                    JOptionPane.showMessageDialog(panel, entityManager.memberIdIsInt(textField1.getText()), "Error", JOptionPane.ERROR_MESSAGE);
+                } else if(personAccess.searchByLibraryNumber(ID) == null){
                     JOptionPane.showMessageDialog(panel, "There is no member in database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
+                } else {
+
                     JPanel screen9 = createScreen9(ID);
                     cardPanel.add(screen9, "Screen9");
                     cardLayout.show(cardPanel, "Screen9");
@@ -897,7 +906,10 @@ public class Graphics extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ID = textField1.getText();
-                if(personAccess.searchByLibraryNumber(ID) == null){
+                if (entityManager.memberIdIsInt(ID)!= null){
+                    JOptionPane.showMessageDialog(panel, entityManager.memberIdIsInt(ID), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else if(personAccess.searchByLibraryNumber(ID) == null){
                     JOptionPane.showMessageDialog(panel, "There is no member in database with that ID!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
