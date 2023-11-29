@@ -17,7 +17,7 @@ public class Graphics extends JFrame {
 
     public Graphics() {
         // Set up the JFrame
-        setTitle("Library Management System");
+        setTitle("EasyLMS");
         setSize(900, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -89,7 +89,7 @@ public class Graphics extends JFrame {
         panel.setLayout(new GridLayout(5,15,3,1));
         JLabel L0;
 
-        L0 = new JLabel("<html><b>Thank you for choosing to use this Library Management System! Please choose the button corresponding to your needs.</b></html>",JLabel.CENTER);
+        L0 = new JLabel("<html><b>Thank you for choosing to use this EasyLMS! Please choose the button corresponding to your needs.</b></html>",JLabel.CENTER);
         panel.add(L0);
         for (String buttonText : buttonTexts) {
             JButton button = new JButton(buttonText);
@@ -109,6 +109,8 @@ public class Graphics extends JFrame {
                     cardPanel.add(screen8, "Screen8");
                     JPanel screen9 = createScreen9("123"); //"123" is just a random value
                     cardPanel.add(screen9, "Screen9");
+                    JPanel screen11 = createScreen11();
+                    cardPanel.add(screen11, "Screen11");
                     JPanel screen12 = createScreen12();
                     cardPanel.add(screen12, "Screen12");
 

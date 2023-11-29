@@ -26,10 +26,10 @@ public class EntityManager {
 			if(memberID.equals("")){
 				return "Please include something in the text field.";
 			}
-			int libraryNumberInt = Integer.parseInt(memberID);
+			Integer.parseInt(memberID);
 			return null;
 		} catch(IllegalArgumentException e){
-			return "MemberID must be a number";
+			return "Member ID must be a number";
 		}
 	}
 
@@ -108,7 +108,6 @@ public class EntityManager {
 			int days = (int) Duration.between(dueDate.toInstant(), currDate.toInstant()).toDays();
 			fees = days*0.1;		// ten cent fee per day
 		}
-		PersonAccess.getInstance().searchByLibraryNumber(Integer.toString(transaction.getLibraryNumber())).updateFeesDue(fees);
 		return fees;
 	}
 	// converts a Calendar object to a String in the format of MM/dd/yyyy
